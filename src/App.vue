@@ -13,8 +13,33 @@ export default {
   name: 'App',
   components: {
     SportsGamesHeader
+  },
+
+  data() {
+    return {
+      baseballGames: [],
+    };
+  },
+
+  methods: {
+    async getTodaysBaseballGames() {
+      try {
+        const response = await this.$http.get(
+          "https://api-baseball.p.rapidapi.com/games"
+        );
+        // JSON responses are automatically parsed.
+        this.baseballGames = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+
+  created() {
+    this.getTodaysBaseballGames();
   }
 }
+
 </script>
 
 <style>

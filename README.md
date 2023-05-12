@@ -3,6 +3,8 @@
 
 ## APIs
 
+We use [axios](https://www.npmjs.com/package/axios) to handle API requests [1](https://www.section.io/engineering-education/how-to-interact-with-an-api-from-a-vuejs-application/).
+
 * [api-basketball](https://www.api-basketball.com/) Basic/Free Plan
     * At 100 requests/day, we can limit our requests by requesting each days' games once and storing the data... we don't need any updates after that.
 * [statsapi.mlb](https://statsapi.mlb.com/docs/login?referrerUrl=https://statsapi.mlb.com/docs/)

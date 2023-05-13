@@ -1,12 +1,14 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- for SportsGamesHeader, make the "current game" the prop to highlight it -->
-  <SportsGamesHeader msg="Welcome to Your Vue.js App"/> 
-  <!-- GAME COMPONENT HERE , pass through specifi sporting event prop -->
+  <SportsGamesHeader/> 
+  <!-- <SportsGamesHeader v-bind:baseballGames="baseballGames"/>  -->
+  <!-- GAME COMPONENT HERE , pass through specific sporting event prop -->
   <!-- FOOTER COMPONENT HERE -->
 </template>
 
 <script>
+//import axios from 'axios';
 import SportsGamesHeader from './components/SportsGamesHeader.vue'
 
 export default {
@@ -24,11 +26,24 @@ export default {
   methods: {
     async getTodaysBaseballGames() {
       try {
-        const response = await this.$http.get(
-          "https://api-baseball.p.rapidapi.com/games"
+        const baseballGamesResponse = await this.axios.get(
+          'https://api-baseball.p.rapidapi.com/games/',
+          {
+            params: {
+              timezone: 'America/Los_Angeles',
+              date: '2023-05-12',
+              season: '2023',
+              league: '1',
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'x-rapidapi-key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a',
+              'x-rapidapi-host': 'api-baseball.p.rapidapi.com'
+            }
+          }
         );
         // JSON responses are automatically parsed.
-        this.baseballGames = response.data;
+        this.baseballGames = baseballGamesResponse.data;
       } catch (error) {
         console.log(error);
       }

@@ -5,11 +5,9 @@
     <div class="games">
       <h2>Today's Games</h2>
       <h3>Baseball</h3>
-      <ul>
-        <li><a href="https://www.mlb.com/gameday/rangers-vs-athletics/2023/05/11/718217/">TEX @ OAK</a></li>
-        <li><a href="https://www.mlb.com/gameday/mets-vs-reds/2023/05/11/718223/">NYM @ CIN</a></li>
-        <li><a href="https://www.mlb.com/gameday/white-sox-vs-royals/2023/05/11/718218/">CWS @ KC</a></li>
-      </ul>
+      <!-- <ul v-for="baseballGame in baseballGames" :key="baseballGame.id">
+        <li v-if="baseballGame.id == 1">{{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }}</li>
+      </ul> -->
     </div>
   </div>
 </template>
@@ -48,7 +46,7 @@
 export default {
   name: 'SportsGamesHeader',
   props: {
-    msg: String
+    baseballGames: []
   }
 }
 </script>

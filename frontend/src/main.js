@@ -20,6 +20,9 @@ import App from './App.vue'
 
 const app = Vue.createApp(App)
 
+app.config.globalProperties.$http = axios;
+
 app
+    //.use(axios)
     .use(VueAxios, axios)
     .mount('#app')

@@ -5,6 +5,12 @@
     <div class="games">
       <h2>Today's Games</h2>
       <h3>Baseball</h3>
+      <ul class="baseball_games_header_list">
+        <li v-for="baseballGame in baseballGames" :key="baseballGame.id">
+          <p>{{ baseballGame.home_team }} </p>
+        </li>
+      </ul>
+
       <!-- <ul v-for="baseballGame in baseballGames" :key="baseballGame.id">
         <li v-if="baseballGame.id == 1">{{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }}</li>
       </ul> -->
@@ -45,8 +51,46 @@
 <script>
 export default {
   name: 'SportsGamesHeader',
-  props: {
-    baseballGames: []
+  // props: {
+  //   baseballGames: []
+  // },
+
+  data() {
+    return {
+      baseballGames: [''],
+    };
+  },
+
+  methods: {
+    async getTodaysBaseballGames() {
+      try {
+        // const baseballGamesResponse = await this.axios.get(
+        //   'http://localhost:8000/baseball_games/',
+        //   {
+        //     params: {
+        //       timezone: 'America/Los_Angeles',
+        //       date: '2023-05-12',
+        //       season: '2023',
+        //       league: '1',
+        //     },
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       'x-rapidapi-key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a',
+        //       'x-rapidapi-host': 'api-baseball.p.rapidapi.com'
+        //     }
+        //   }
+        // );
+        // JSON responses are automatically parsed.
+        const response = await this.$http.get('http://localhost:8000/baseball_games/');
+        this.baseballGames = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+
+  created() {
+    this.getTodaysBaseballGames();
   }
 }
 </script>

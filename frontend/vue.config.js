@@ -4,7 +4,7 @@ module.exports = defineConfig({
   //https://cli.vuejs.org/config/#devserver
   devServer: {
     proxy:  {
-      '/api': {
+      '/baseball_games': {
         target: 'http://localhost:8000'
       },
     }

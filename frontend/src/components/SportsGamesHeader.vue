@@ -7,7 +7,8 @@
       <h3>Baseball</h3>
       <ul class="baseball_games_header_list">
         <li v-for="baseballGame in baseballGames" :key="baseballGame.id">
-          <p>{{ baseballGame.home_team }} </p>
+          <!-- *** {{ baseballGame }} -->
+          <p>{{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }} </p>
         </li>
       </ul>
 
@@ -81,8 +82,8 @@ export default {
         //   }
         // );
         // JSON responses are automatically parsed.
-        const response = await this.$http.get('http://localhost:8000/baseball_games/');
-        this.baseballGames = response.data;
+        const response = await this.$http.get('http://localhost:8000/baseball_games_today/');
+        this.baseballGames = response.data.response;
       } catch (error) {
         console.log(error);
       }

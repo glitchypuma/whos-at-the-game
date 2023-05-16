@@ -19,7 +19,7 @@ from django.urls import path
 from games import views
 
 urlpatterns = [
-    path('/baseball_games/', views.baseball_games),
-    path('/baseball_games/<int:pk>/', views.baseball_game_detail),
+    path('baseball_games_today/', views.baseball_games_today, name='baseball_today'),
+    path('baseball_games/<int:pk>/', views.baseball_game_detail),
     path('admin/', admin.site.urls),
 ]

@@ -3,45 +3,45 @@
     <!-- <h1 class="title">Who's at the game?</h1> -->
     <h2 style="border-bottom: .1rem solid black;">Today's Games</h2>
     <div class="games">
-
       <div>
         <h3 v-if="baseballGames.length">Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">∇</button></h3>
-        <ul class="baseball_list">
-          <li v-for="baseballGame in baseballGames" :key="baseballGame.id">
-            {{ baseballGame }}
-            <!-- <p>{{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }} </p> -->
-          </li>
-        </ul>
       </div>
-      
       <div>
         <h3 v-if="basketballGames.length">Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">∇</button></h3>
-        <ul class="basketball_list">
-          <li v-for="basketballGame in basketballGames" :key="basketballGame.id">
-            {{ basketballGame }}
-          </li>
-        </ul>
       </div>
-      
       <div>
         <h3 v-if="!footballGames.length">Football <button id="header-toggle" v-on:click="togglediv('football_list')">∇</button></h3>
-        <ul class="football_list">
-          <li v-for="footballGame in footballGames" :key="footballGame.id">
-            {{ footballGame }}
-          </li>
-        </ul>
       </div>
-
       <div>
         <h3 v-if="soccerGames.length">Soccer <button id="header-toggle" v-on:click="togglediv('soccer_list')">∇</button></h3>
-        <ul class="soccer_list">
-          <li v-for="soccerGame in soccerGames" :key="soccerGame.id">
-            {{ soccerGame }}
-          </li>
-        </ul>
       </div>
-      
     </div>
+
+    <ul class="baseball_list">
+      <li v-for="baseballGame in baseballGames" :key="baseballGame.id">
+        {{ baseballGame }}
+        <!-- <p>{{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }} </p> -->
+      </li>
+    </ul>
+
+    <ul class="basketball_list">
+        <li v-for="basketballGame in basketballGames" :key="basketballGame.id">
+          {{ basketballGame }}
+        </li>
+      </ul>
+          
+    <ul class="football_list">
+      <li v-for="footballGame in footballGames" :key="footballGame.id">
+        {{ footballGame }}
+      </li>
+    </ul>
+        
+    <ul class="soccer_list">
+      <li v-for="soccerGame in soccerGames" :key="soccerGame.id">
+        {{ soccerGame }}
+      </li>
+    </ul>
+
   </div>
 </template>
 
@@ -72,7 +72,18 @@ export default {
 
     togglediv: function (name) {
       var div = document.getElementsByClassName(name)[0]
-      div.style.display = div.style.display == "flex" ? "none" : "flex";
+
+      if(div.style.display == "flex"){
+        div.style.display = "none"
+      } else {
+        var gameLists = document.querySelectorAll("ul")
+
+        gameLists.forEach((list) => {
+          list.style.display = "none"
+        });
+
+        div.style.display = "flex"
+      }
     }
   },
 
@@ -97,14 +108,13 @@ export default {
 .football_list,
 .soccer_list
 {
+  margin: 0;
   display: none;
-  /* position: relative; */
 }
 
 .games{
   display: flex;
   align-items: stretch;
-  /* align-content: flex-end; */
   flex-flow: row wrap;
   justify-content: flex-start;
   column-gap: 1rem;
@@ -117,13 +127,14 @@ h2 {
   margin: .1rem;
   text-align: left;
 }
-h3 {
-  /* position: relative; */
-}
+/* h3 {
+  position: relative;
+} */
 ul {
   display: flex;
   list-style-type: none;
   padding: 0;
+  column-gap: 1rem;
 }
 li {
   flex-flow: row wrap;
@@ -143,10 +154,5 @@ a {
   background-color: transparent;
   border-radius: 12px;
   vertical-align: center;
-  /* position: relative; */
-  /* top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  margin-left: .5rem; */
 }
 </style>

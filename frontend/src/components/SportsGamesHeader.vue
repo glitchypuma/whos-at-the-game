@@ -70,7 +70,13 @@ export default {
       }
     },
 
+    sendCrawlerParams(homeTeam, awayTeam) {
+      this.$emit("crawler-params", {homeTeam, awayTeam})
+    },
+
     togglediv: function (name) {
+      this.sendCrawlerParams("test", "test")
+      
       var div = document.getElementsByClassName(name)[0]
 
       if(div.style.display == "flex"){
@@ -97,6 +103,7 @@ export default {
 .website-header{
   padding: 10px 40px;
   background-color:blanchedalmond;
+  border-bottom: .3em solid rgb(224, 193, 146) ;
 }
 
 .title{

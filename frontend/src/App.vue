@@ -1,7 +1,8 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- for SportsGamesHeader, make the "current game" the prop to highlight it -->
-  <SportsGamesHeader/>
+  <SportsGamesHeader @crawler-params="getCrawlerParams"/>
+  <GameAttendance  :crawlerParams="params"/>
   <!-- <SportsGamesHeader v-bind:baseballGames="baseballGames"/>  -->
   <!-- GAME COMPONENT HERE , pass through specific sporting event prop -->
   <!-- FOOTER COMPONENT HERE -->
@@ -9,13 +10,28 @@
 
 <script>
 import SportsGamesHeader from './components/SportsGamesHeader.vue'
+import GameAttendance from './components/GameAttendance.vue'
 
 export default {
   name: 'App',
   components: {
-    SportsGamesHeader
+    SportsGamesHeader,
+    GameAttendance
+  },
+
+  data () {
+    return {
+      params: {}
+    }
+  },
+
+  methods: {
+    getCrawlerParams(params) {
+      console.log(params)
+      this.crawlerParams = params;
+    }
   }
-}
+};
 
 </script>
 

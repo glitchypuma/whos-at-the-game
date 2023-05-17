@@ -4,7 +4,7 @@
     <div class="games">
       <h2>Today's Games</h2>
 
-      <h3>Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">∇</button></h3>
+      <h3 v-if="baseballGames.length">Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">∇</button></h3>
       <ul class="baseball_list">
         <li v-for="baseballGame in baseballGames" :key="baseballGame.id">
           {{ baseballGame }}
@@ -12,21 +12,21 @@
         </li>
       </ul>
 
-      <h3>Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">∇</button></h3>
+      <h3 v-if="basketballGames.length">Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">∇</button></h3>
       <ul class="basketball_list">
         <li v-for="basketballGame in basketballGames" :key="basketballGame.id">
           {{ basketballGame }}
         </li>
       </ul>
 
-      <h3>Football <button id="header-toggle" v-on:click="togglediv('football_list')">∇</button></h3>
+      <h3 v-if="!footballGames.length">Football <button id="header-toggle" v-on:click="togglediv('football_list')">∇</button></h3>
       <ul class="football_list">
         <li v-for="footballGame in footballGames" :key="footballGame.id">
           {{ footballGame }}
         </li>
       </ul>
 
-      <h3>Soccer <button id="header-toggle" v-on:click="togglediv('soccer_list')">∇</button></h3>
+      <h3 v-if="soccerGames.length">Soccer <button id="header-toggle" v-on:click="togglediv('soccer_list')">∇</button></h3>
       <ul class="soccer_list">
         <li v-for="soccerGame in soccerGames" :key="soccerGame.id">
           {{ soccerGame }}
@@ -100,7 +100,11 @@ ul {
 }
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: .2rem .5rem;
+  padding: .3rem;
+  border-radius: 1px;
+  border-style: solid;
+  border-color: darkslateblue;
 }
 a {
   color: #000000;

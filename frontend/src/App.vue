@@ -1,7 +1,7 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- for SportsGamesHeader, make the "current game" the prop to highlight it -->
-  <SportsGamesHeader/> 
+  <SportsGamesHeader/>
   <!-- <SportsGamesHeader v-bind:baseballGames="baseballGames"/>  -->
   <!-- GAME COMPONENT HERE , pass through specific sporting event prop -->
   <!-- FOOTER COMPONENT HERE -->
@@ -21,11 +21,13 @@ export default {
 
 <style>
 #app {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-content: stretch;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
-  margin-top: 20px;
 }
 </style>

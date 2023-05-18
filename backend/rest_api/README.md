@@ -4,6 +4,9 @@
 
 * Run `poetry add [package]` to add a new dependency
 
-# APIs
-
-* Baseball https://rapidapi.com/api-sports/api/api-baseball/details
+## APIs
+* [API-SPORTS](https://rapidapi.com/user/api-sports)
+  * [Basebal](https://rapidapi.com/api-sports/api/api-baseball/)
+  * [Basketball](https://rapidapi.com/api-sports/api/api-basketball/)
+  * [American Football](https://rapidapi.com/api-sports/api/api-american-football/)
+  * [Football](https://rapidapi.com/api-sports/api/api-football/)

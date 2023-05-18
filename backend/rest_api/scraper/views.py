@@ -4,6 +4,8 @@ import snscrape.modules.twitter as sntwitter
 import pandas as pd
 import os
 
+#snscraper dev version: 0.6.2.20230321.dev12+gea49c19
+
 # Create your views here.
 def scrape_twitter(home_team, away_team):
     scraper = sntwitter.TwitterSearchScraper(home_team + " " + away_team)

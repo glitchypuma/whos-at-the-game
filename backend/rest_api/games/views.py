@@ -112,7 +112,7 @@ def basketball_games_today(request):
     '''
     if(request.method == 'GET'):
         # get all the basketball games
-        response = requests.get('https://v1.basketball.api-sports.io/games', headers=headers, params=params)
+        response = requests.get('https://api-basketball.p.rapidapi.com/games', headers=headers, params=params)
         basketball_games = response.json()
         
         return JsonResponse(basketball_games) #TODO: use serializer + model

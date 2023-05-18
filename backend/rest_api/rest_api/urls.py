@@ -21,5 +21,8 @@ from games import views
 urlpatterns = [
     path('baseball_games_today/', views.baseball_games_today, name='baseball_today'),
     path('baseball_games/<int:pk>/', views.baseball_game_detail),
+
+    path('basketball_games_today/', views.basketball_games_today, name='basketball_today'),
+
     path('admin/', admin.site.urls),
 ]

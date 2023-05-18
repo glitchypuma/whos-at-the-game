@@ -10,9 +10,10 @@ from .serializers import BaseballGameSerializer
 # baseballgame model
 from .models import BaseballGame
 import requests
-from datetime import datetime
-
+from datetime import datetime, timedelta
 from django.http import JsonResponse
+
+''' BASEBALL '''
 
 @csrf_exempt
 def baseball_games_today(request):
@@ -35,7 +36,6 @@ def baseball_games_today(request):
     List all of today's baseball games using API-BASEBALL
     '''
     if(request.method == 'GET'):
-        # print(params)
         # get all the baseball games
         response = requests.get('https://api-baseball.p.rapidapi.com/games', headers=headers, params=params)
         baseball_games = response.json()
@@ -86,4 +86,33 @@ def baseball_game_detail(request, pk):
         # delete the task
         game.delete() 
         # return a no content response.
-        return HttpResponse(status=204) 
+        return HttpResponse(status=204)
+    
+''' BASKETBALL '''
+
+@csrf_exempt
+def basketball_games_today(request):
+    # TODO: BETTER KEY MANAGEMENT
+    headers = {
+        'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+        'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com'
+        }
+    
+    today = datetime.today().strftime('%Y-%m-%d')
+    season = (datetime.today() - timedelta(days=365)).strftime('%Y') + "-" + datetime.today().strftime('%Y')
+    params = {
+        'timezone': 'America/Los_Angeles',
+        'date': today,
+        'season': season,
+        'league': '1'
+    }
+
+    '''
+    List all of today's basketball games using API-BASKETBALL
+    '''
+    if(request.method == 'GET'):
+        # get all the basketball games
+        response = requests.get('https://v1.basketball.api-sports.io/games', headers=headers, params=params)
+        basketball_games = response.json()
+        
+        return JsonResponse(basketball_games) #TODO: use serializer + model

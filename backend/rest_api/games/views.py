@@ -13,7 +13,7 @@ import requests
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 
-''' BASEBALL '''
+''' BASEBALL (MLB) '''
 
 @csrf_exempt
 def baseball_games_today(request):
@@ -88,7 +88,7 @@ def baseball_game_detail(request, pk):
         # return a no content response.
         return HttpResponse(status=204)
     
-''' BASKETBALL '''
+''' BASKETBALL (NBA) '''
 
 @csrf_exempt
 def basketball_games_today(request):
@@ -104,7 +104,7 @@ def basketball_games_today(request):
         'timezone': 'America/Los_Angeles',
         'date': today,
         'season': season,
-        'league': '1'
+        'league': '12'
     }
 
     '''
@@ -116,3 +116,33 @@ def basketball_games_today(request):
         basketball_games = response.json()
         
         return JsonResponse(basketball_games) #TODO: use serializer + model
+    
+''' FOOTBALL (MLS) '''
+
+@csrf_exempt
+def football_games_today(request):
+    # TODO: BETTER KEY MANAGEMENT
+    headers = {
+        'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+        }
+    
+    today = datetime.today().strftime('%Y-%m-%d')
+    season = datetime.today().strftime('%Y')
+    params = {
+        'timezone': 'America/Los_Angeles',
+        'date': today,
+        'season': season,
+        'league': '253'
+    }
+
+    '''
+    List all of today's football games using API-FOOTBALL
+    '''
+    if(request.method == 'GET'):
+        # get all the football games
+        response = requests.get('https://api-football-v1.p.rapidapi.com/v3/fixtures', headers=headers, params=params)
+        football_games = response.json()
+        
+        return JsonResponse(football_games) #TODO: use serializer + model
+    

@@ -19,8 +19,8 @@
 
     <ul class="baseball_list">
       <li v-for="baseballGame in baseballGames" :key="baseballGame.id">
-        {{ baseballGame }}
-        <!-- {{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }} -->
+        <!-- {{ baseballGame }} -->
+        {{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }}
       </li>
     </ul>
 
@@ -39,7 +39,8 @@
         
     <ul class="football_list">
       <li v-for="footballGame in footballGames" :key="footballGame.id">
-        {{ footballGame }}
+        <!-- {{ footballGame }} -->
+        {{ footballGame.teams.away.name }} v {{ footballGame.teams.home.name }}
       </li>
     </ul>
 
@@ -54,11 +55,12 @@ export default {
     return {
       baseballGames: [],
       basketballGames: [],
+      footballGames: [],
 
       // baseballGames: ['New York Yankees @ Toronto Blue Jays', 'Washington Nationals @ Miami Marlins', 'Minnesota Twins @ Los Angeles Dodgers', 'Pittsburgh Pirates @ Detriot Tigers', 'Los Angeles Angels @ Baltimore Orioles'],
       // basketballGames: ['Los Angeles Lakers @ Denver Nuggets', 'Miami Heat @ Boston Celtics'],
       ameFootballGames: [],
-      footballGames: ['Internazionale v AC Milan', 'Luton Town v Sunderland', 'FC Groningen v Ajax Amsterdam', 'One Knoxville v Chattanooga Red Wolves'],
+      // footballGames: ['Internazionale v AC Milan', 'Luton Town v Sunderland', 'FC Groningen v Ajax Amsterdam', 'One Knoxville v Chattanooga Red Wolves'],
     };
   },
 
@@ -75,6 +77,14 @@ export default {
       try {
         const response = await this.$http.get('http://localhost:8000/basketball_games_today/');
         this.basketballGames = response.data.response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getTodaysFootballGames() {
+      try {
+        const response = await this.$http.get('http://localhost:8000/football_games_today/');
+        this.footballGames = response.data.response;
       } catch (error) {
         console.log(error);
       }
@@ -106,6 +116,7 @@ export default {
   created() {
     this.getTodaysBaseballGames();
     this.getTodaysBasketballGames();
+    this.getTodaysFootballGames();
   }
 }
 </script>

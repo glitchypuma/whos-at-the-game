@@ -20,7 +20,7 @@
     <ul class="baseball_list">
       <li v-for="baseballGame in baseballGames" :key="baseballGame.id">
         {{ baseballGame }}
-        <!-- <p>{{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }} </p> -->
+        <!-- {{ baseballGame.teams.away.name }} @ {{ baseballGame.teams.home.name }} -->
       </li>
     </ul>
 
@@ -55,8 +55,6 @@ export default {
       basketballGames: ['Los Angeles Lakers @ Denver Nuggets', 'Miami Heat @ Boston Celtics'],
       footballGames: [''],
       soccerGames: ['Internazionale v AC Milan', 'Luton Town v Sunderland', 'FC Groningen v Ajax Amsterdam', 'One Knoxville v Chattanooga Red Wolves'],
-    
-      // baseballGames: ['']
     };
   },
 
@@ -125,6 +123,7 @@ export default {
   flex-flow: row wrap;
   justify-content: flex-start;
   column-gap: 1rem;
+  text-align: center;
 }
 
 h1 {
@@ -139,15 +138,17 @@ h2 {
 } */
 ul {
   display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+  gap: .5rem;
   list-style-type: none;
   padding: 0;
   column-gap: 1rem;
 }
 li {
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-content: center;
-  gap: 1rem;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
   padding: .2rem;
   border-radius: 1px;
   border-style: solid;

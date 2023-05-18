@@ -10,10 +10,10 @@
         <h3 v-if="basketballGames.length">Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">∇</button></h3>
       </div>
       <div>
-        <h3 v-if="footballGames.length">Football <button id="header-toggle" v-on:click="togglediv('football_list')">∇</button></h3>
+        <h3 v-if="ameFootballGames.length">American Football <button id="header-toggle" v-on:click="togglediv('ame_football_list')">∇</button></h3>
       </div>
       <div>
-        <h3 v-if="soccerGames.length">Soccer <button id="header-toggle" v-on:click="togglediv('soccer_list')">∇</button></h3>
+        <h3 v-if="footballGames.length">Football <button id="header-toggle" v-on:click="togglediv('football_list')">∇</button></h3>
       </div>
     </div>
 
@@ -26,19 +26,20 @@
 
     <ul class="basketball_list">
         <li v-for="basketballGame in basketballGames" :key="basketballGame.id">
-          {{ basketballGame }}
+          <!-- {{ basketballGame }} -->
+          {{ basketballGame.teams.away.name }} @ {{ basketballGame.teams.home.name }}
         </li>
       </ul>
           
-    <ul class="football_list">
-      <li v-for="footballGame in footballGames" :key="footballGame.id">
-        {{ footballGame }}
+    <ul class="ame_football_list">
+      <li v-for="ameFootballGame in ameFootballGames" :key="ameFootballGame.id">
+        {{ ameFootballGame }}
       </li>
     </ul>
         
-    <ul class="soccer_list">
-      <li v-for="soccerGame in soccerGames" :key="soccerGame.id">
-        {{ soccerGame }}
+    <ul class="football_list">
+      <li v-for="footballGame in footballGames" :key="footballGame.id">
+        {{ footballGame }}
       </li>
     </ul>
 
@@ -56,8 +57,8 @@ export default {
 
       // baseballGames: ['New York Yankees @ Toronto Blue Jays', 'Washington Nationals @ Miami Marlins', 'Minnesota Twins @ Los Angeles Dodgers', 'Pittsburgh Pirates @ Detriot Tigers', 'Los Angeles Angels @ Baltimore Orioles'],
       // basketballGames: ['Los Angeles Lakers @ Denver Nuggets', 'Miami Heat @ Boston Celtics'],
-      footballGames: [],
-      soccerGames: ['Internazionale v AC Milan', 'Luton Town v Sunderland', 'FC Groningen v Ajax Amsterdam', 'One Knoxville v Chattanooga Red Wolves'],
+      ameFootballGames: [],
+      footballGames: ['Internazionale v AC Milan', 'Luton Town v Sunderland', 'FC Groningen v Ajax Amsterdam', 'One Knoxville v Chattanooga Red Wolves'],
     };
   },
 
@@ -122,8 +123,8 @@ export default {
 
 .baseball_list,
 .basketball_list,
-.football_list,
-.soccer_list
+.ame_football_list,
+.football_list
 {
   margin: 0;
   display: none;

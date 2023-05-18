@@ -1,11 +1,8 @@
-## Installing Dependencies
+## Dependencies
 
-Use [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) (version 1.4.2)
+* Use [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) (version 1.4.2) and run `poetry install` to install project dependencies
 
-
-`pip install -r requirements.txt`
-
-* https://pypi.org/project/requests/2.30.0/
+* Run `poetry add [package]` to add a new dependency
 
 # APIs
 

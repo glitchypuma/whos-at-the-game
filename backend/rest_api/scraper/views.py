@@ -18,7 +18,7 @@ def scrape_twitter(home_team, away_team):
                 tweet.content, 
                 tweet.user.username, 
                 tweet.likeCount, 
-                tweet.retweetcount
+                tweet.retweetCount
         ]
         tweets.append(data)
         if i > 10:
@@ -26,7 +26,7 @@ def scrape_twitter(home_team, away_team):
 
     tweets_df = pd.DataFrame(tweets, columns=['date', 'id', 'content', 'username', 
                                                 'like_count', 'retweet_count'])
-    print(tweets_df.to_string)
+    print(tweets_df['content'].to_string)
 
 
 if __name__ == '__main__':

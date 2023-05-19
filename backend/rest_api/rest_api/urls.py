@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from games import views
+from scraper import views as scraper_views
 
 urlpatterns = [
     path('baseball_games_today/', views.baseball_games_today, name='baseball_today'),
@@ -25,6 +26,8 @@ urlpatterns = [
     path('basketball_games_today/', views.basketball_games_today, name='basketball_today'),
 
     path('football_games_today/', views.football_games_today, name='football_today'),
+
+    path('twitter_scraper/<str:away>/<str:home>/', scraper_views.scrape_twitter),
 
     path('admin/', admin.site.urls),
 ]

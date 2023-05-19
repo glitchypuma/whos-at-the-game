@@ -15,6 +15,7 @@ def scrape_twitter(request, away, home):
         print("Good request")
         scraper = sntwitter.TwitterSearchScraper(home + " " + away)
 
+<<<<<<< HEAD
         tweets = []
 
         for i, tweet in enumerate(scraper.get_items()):
@@ -34,6 +35,23 @@ def scrape_twitter(request, away, home):
         return JsonResponse(tweets_df.to_json(), safe=False)
     else:
         return HttpResponse(status=400)
+=======
+    for i, tweet in enumerate(scraper.get_items()):
+        data = [tweet.date, 
+                tweet.id, 
+                tweet.content, 
+                tweet.user.username, 
+                tweet.likeCount, 
+                tweet.retweetCount
+        ]
+        tweets.append(data)
+        if i > 10:
+            break
+
+    tweets_df = pd.DataFrame(tweets, columns=['date', 'id', 'content', 'username', 
+                                                'like_count', 'retweet_count'])
+    print(tweets_df['content'].to_string)
+>>>>>>> c006c2ff72804cd6312e4797cb2b58b8a633e646
 
 
 # if __name__ == '__main__':

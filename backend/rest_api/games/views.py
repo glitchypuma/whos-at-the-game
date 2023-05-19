@@ -171,7 +171,7 @@ def ame_football_games_today(request, league):
         'timezone': 'America/Los_Angeles',
         'date': today,
         'season': season,
-        'league': league
+        'league': str(league)
     }
 
     '''

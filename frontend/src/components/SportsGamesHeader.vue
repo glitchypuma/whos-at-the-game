@@ -4,54 +4,64 @@
     <h2 style="border-bottom: .1rem solid black;">Today's Games</h2>
     <div class="games">
       <div v-if="baseballGames.length">
-        <h3>Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">∇</button></h3>
+        <h3>⚾ Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">∇</button></h3>
       </div>
       <div v-if="basketballGames.length">
-        <h3>Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">∇</button></h3>
+        <h3>🏀 Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">∇</button></h3>
       </div>
       <div v-if="NFLGames.length">
-        <h3>NFL <button id="header-toggle" v-on:click="togglediv('nfl_football_list')">∇</button></h3>
+        <h3>🏈 NFL <button id="header-toggle" v-on:click="togglediv('nfl_football_list')">∇</button></h3>
       </div>
       <div v-if="NCAAGames.length">
-        <h3>NCAA <button id="header-toggle" v-on:click="togglediv('ncaa_football_list')">∇</button></h3>
+        <h3>🏈 NCAA <button id="header-toggle" v-on:click="togglediv('ncaa_football_list')">∇</button></h3>
       </div>
       <div v-if="footballGames.length">
-        <h3>Football <button id="header-toggle" v-on:click="togglediv('football_list')">∇</button></h3>
+        <h3>⚽ Football <button id="header-toggle" v-on:click="togglediv('football_list')">∇</button></h3>
       </div>
   </div>
 
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
-        <!-- {{ game }} -->
-        {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+        <a href="">
+          {{ game }}
+          <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+        </a>
       </li>
     </ul>
 
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
-          <!-- {{ game }} -->
-          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+          <a href="">
+            {{ game }}
+            <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+          </a>
         </li>
       </ul>
           
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
-        {{ game }}
-        <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+        <a>
+          {{ game }}
+          <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+        </a>  
       </li>
     </ul>
 
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
-        {{ game }}
-        <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+        <a>
+          <!-- {{ game }} -->
+          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+        </a>
       </li>
     </ul>
         
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
-        <!-- {{ game }} -->
-        {{ game.teams.away.name }} vs {{ game.teams.home.name }}
+        <a>
+          {{ game }}
+          <!-- {{ game.teams.away.name }} vs {{ game.teams.home.name }} -->
+        </a>
       </li>
     </ul>
 
@@ -64,16 +74,17 @@ export default {
 
   data() {
     return {
-      baseballGames: [],
-      basketballGames: [],
+      // baseballGames: [],
+      // basketballGames: [],
+      // NFLGames: [],
+      // NCAAGames: [],
+      // footballGames: []
+
+      baseballGames: ['New York Yankees @ Toronto Blue Jays', 'Washington Nationals @ Miami Marlins', 'Minnesota Twins @ Los Angeles Dodgers', 'Pittsburgh Pirates @ Detriot Tigers', 'Los Angeles Angels @ Baltimore Orioles'],
+      basketballGames: ['Los Angeles Lakers @ Denver Nuggets', 'Miami Heat @ Boston Celtics'],
       NFLGames: [],
       NCAAGames: [],
-      footballGames: []
-
-      // baseballGames: ['New York Yankees @ Toronto Blue Jays', 'Washington Nationals @ Miami Marlins', 'Minnesota Twins @ Los Angeles Dodgers', 'Pittsburgh Pirates @ Detriot Tigers', 'Los Angeles Angels @ Baltimore Orioles'],
-      // basketballGames: ['Los Angeles Lakers @ Denver Nuggets', 'Miami Heat @ Boston Celtics'],
-      // ameFootballNFLGames: [],
-      // footballGames: ['Internazionale v AC Milan', 'Luton Town v Sunderland', 'FC Groningen v Ajax Amsterdam', 'One Knoxville v Chattanooga Red Wolves']
+      footballGames: ['Internazionale v AC Milan', 'Luton Town v Sunderland', 'FC Groningen v Ajax Amsterdam', 'One Knoxville v Chattanooga Red Wolves']
     };
   },
 
@@ -192,12 +203,14 @@ h1 {
   text-align: left;
 }
 h2 {
+  color: darkslateblue;
   margin: .1rem;
   text-align: left;
 }
-/* h3 {
+h3 {
+  color: darkslateblue;
   position: relative;
-} */
+}
 ul {
   display: flex;
   align-items: center;
@@ -215,10 +228,35 @@ li {
   border-radius: 1px;
   border-style: solid;
   border-color: darkslateblue;
+  background-color: rgb(255, 246, 233);
 }
-a {
+li a {
+  position: relative;
+  /* display: block; */
+  color: black;
+  text-decoration: none;
+  z-index: 0;
+}
+li a:before
+{
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: lightblue;
+  z-index: -1;
+  transform: scale(0);
+  transition: transform 0.5s ease-in-out
+}
+li a:hover:before,
+li a:focus:before {
+  transform: scale(1);
+}
+/* a {
   color: #000000;
-}
+} */
 
 #header-toggle {
   background-color: transparent;

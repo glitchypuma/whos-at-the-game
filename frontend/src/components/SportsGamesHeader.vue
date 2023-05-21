@@ -250,8 +250,8 @@ li a:focus:before {
 } */
 
 #header-toggle {
-  background-color: #c93b3dc0 ;
-  border-color: #EF3E42 ;
+  background-color: #a5acaf9a  ;
+  border-color: #A5ACAF  ;
   border-radius: 180px;
   vertical-align: center;
 }

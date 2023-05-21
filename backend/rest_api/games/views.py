@@ -13,54 +13,75 @@ import requests
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 
+# TODO: BETTER KEY MANAGEMENT
+headers = {
+    'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+    'X-RapidAPI-Host': 'api-baseball.p.rapidapi.com'
+    }
+
 ''' BASEBALL (MLB) '''
 
 @csrf_exempt
 def baseball_games_today(request):
-    # TODO: BETTER KEY MANAGEMENT
-    headers = {
-        'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
-        'X-RapidAPI-Host': 'api-baseball.p.rapidapi.com'
-        }
-    
     today = datetime.today().strftime('%Y-%m-%d')
-    season = datetime.today().strftime('%Y')
-    params = {
-        'timezone': 'America/Los_Angeles',
-        'date': today,
-        'season': season,
-        'league': '1'
-    }
-
+    
     '''
-    List all of today's baseball games using API-BASEBALL
+    Return list of all of today's baseball games
     '''
     if(request.method == 'GET'):
-        # get all the baseball games
-        response = requests.get('https://api-baseball.p.rapidapi.com/games', headers=headers, params=params)
-        baseball_games = response.json()
-        
-        return JsonResponse(baseball_games) #TODO: use serializer + model
+        # does db have today's games? 
+        baseballGame = BaseballGame.objects.first
+        serializedGame = BaseballGameSerializer(baseballGame, many=False)
+        if(serializedGame.date_start == today): #if so, GET baseball games from db
+            baseball_games = BaseballGame.objects.all()
+            serializer = BaseballGameSerializer(baseball_games, many=True)
+            return JsonResponse(serializer.data,safe=False)
+        else: #if not, GET baseball games from API and save to db for future retrieval
+            season = datetime.today().strftime('%Y')
+            params = {
+                'timezone': 'America/Los_Angeles',
+                'date': today,
+                'season': season,
+                'league': '1'
+            }
+            response = requests.get('https://api-baseball.p.rapidapi.com/games', headers=headers, params=params)
+            baseball_games = response.json()
+            serializer = BaseballGameSerializer(data=baseball_games.data, many=True)
+            
+            post_baseball_game(data=baseball_games.data)
 
-    #     games = BaseballGame.objects.all()
-    #     # serialize the task data
-    #     serializer = BaseballGameSerializer(games, many=True)
-    #     # return a Json response
-    #     return JsonResponse(serializer.data,safe=False)
-    # elif(request.method == 'POST'):
-    #     # parse the incoming information
-    #     data = JSONParser().parse(request)
-    #     # instanciate with the serializer
-    #     serializer = BaseballGameSerializer(data=data)
-    #     # check if the sent information is okay
-    #     if(serializer.is_valid()):
-    #         # if okay, save it on the database
-    #         serializer.save()
-    #         # provide a Json Response with the data that was saved
-    #         return JsonResponse(serializer.data, status=201)
-    #         # provide a Json Response with the necessary error information
-    #     return JsonResponse(serializer.errors, status=400)
-    
+            # check if the information received is okay
+            # if(post_response.status ?)
+            return JsonResponse(serializer.data, safe=False)
+            
+    elif(request.method == 'POST'):
+        # parse the incoming information
+        data = JSONParser().parse(request)
+        # instanciate with the serializer
+        serializer = BaseballGameSerializer(data=data)
+        # check if the sent information is okay
+        if(serializer.is_valid()):
+            # if okay, save it on the database
+            serializer.save()
+            # provide a Json Response with the data that was saved
+            return JsonResponse(serializer.data, status=201)
+            # provide a Json Response with the necessary error information
+        return JsonResponse(serializer.errors, status=400)
+
+def post_baseball_game(response):
+    # parse the incoming information
+    data = JSONParser().parse(response)
+    # instanciate with the serializer
+    serializer = BaseballGameSerializer(data=data)
+    # check if the sent information is okay
+    if(serializer.is_valid()):
+        # if okay, save it on the database
+        serializer.save()
+        # provide a Json Response with the data that was saved
+        return JsonResponse(serializer.data, status=201)
+        # provide a Json Response with the necessary error information
+    return JsonResponse(serializer.errors, status=400)
+
 @csrf_exempt
 def baseball_game_detail(request, pk):
     try:
@@ -92,12 +113,6 @@ def baseball_game_detail(request, pk):
 
 @csrf_exempt
 def basketball_games_today(request):
-    # TODO: BETTER KEY MANAGEMENT
-    headers = {
-        'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
-        'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com'
-        }
-    
     today = datetime.today().strftime('%Y-%m-%d')
     season = (datetime.today() - timedelta(days=365)).strftime('%Y') + "-" + datetime.today().strftime('%Y')
     params = {
@@ -121,12 +136,6 @@ def basketball_games_today(request):
 
 @csrf_exempt
 def football_games_today(request):
-    # TODO: BETTER KEY MANAGEMENT
-    headers = {
-        'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
-        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-        }
-    
     today = datetime.today().strftime('%Y-%m-%d')
     season = datetime.today().strftime('%Y')
     params = {
@@ -150,12 +159,6 @@ def football_games_today(request):
 
 @csrf_exempt
 def ame_football_games_today(request, league):
-    # TODO: BETTER KEY MANAGEMENT
-    headers = {
-        'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
-        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-        }
-    
     ### Set request parameters
     today = datetime.today().strftime('%Y-%m-%d')
     match league:

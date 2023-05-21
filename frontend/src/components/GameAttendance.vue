@@ -21,6 +21,6 @@ export default {
 
 <style scoped>
 body {
-    text-align: left;
+    text-align: center;
 }
 </style>

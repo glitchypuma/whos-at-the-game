@@ -1,8 +1,10 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- for SportsGamesHeader, make the "current game" the prop to highlight it -->
-  <SportsGamesHeader @crawler-params="getCrawlerParams"/>
-  <GameAttendance  :crawlerParams="params"/>
+  <SportsGamesHeader @scraper-params="getscraperParams"/>
+  <WebsiteTitle />
+  <LandingPage v-if="viewingGame" />
+  <GameAttendance v-if="!viewingGame" :params="scraperParams"/>
   <!-- <SportsGamesHeader v-bind:baseballGames="baseballGames"/>  -->
   <!-- GAME COMPONENT HERE , pass through specific sporting event prop -->
   <!-- FOOTER COMPONENT HERE -->
@@ -10,25 +12,31 @@
 
 <script>
 import SportsGamesHeader from './components/SportsGamesHeader.vue'
+import WebsiteTitle from './components/WebsiteTitle.vue'
 import GameAttendance from './components/GameAttendance.vue'
+import LandingPage from './components/LandingPage.vue'
 
 export default {
   name: 'App',
   components: {
     SportsGamesHeader,
+    WebsiteTitle,
+    LandingPage,
     GameAttendance
   },
 
   data () {
     return {
-      params: {}
+      scraperParams: {},
+      viewingGame: false
     }
   },
 
   methods: {
-    getCrawlerParams(params) {
+    getscraperParams(params) {
       console.log(params)
-      this.crawlerParams = params;
+      this.scraperParams = params;
+      this.viewingGame = true;
     }
   }
 };
@@ -44,6 +52,11 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #552583;
+  /* background-color: blanchedalmond; */
+}
+
+::selection {
+  background-color: lightblue;
 }
 </style>

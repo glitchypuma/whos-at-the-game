@@ -4,25 +4,25 @@
     <h2 style="border-bottom: .1rem solid black;">Today's Games</h2>
     <div class="games">
       <div v-if="baseballGames.length">
-        <h3>⚾ Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">∇</button></h3>
+        <h3>⚾ Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">V</button></h3>
       </div>
       <div v-if="basketballGames.length">
-        <h3>🏀 Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">∇</button></h3>
+        <h3>🏀 Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">V</button></h3>
       </div>
       <div v-if="NFLGames.length">
-        <h3>🏈 NFL <button id="header-toggle" v-on:click="togglediv('nfl_football_list')">∇</button></h3>
+        <h3>🏈 NFL <button id="header-toggle" v-on:click="togglediv('nfl_football_list')">V</button></h3>
       </div>
       <div v-if="NCAAGames.length">
-        <h3>🏈 NCAA <button id="header-toggle" v-on:click="togglediv('ncaa_football_list')">∇</button></h3>
+        <h3>🏈 NCAA <button id="header-toggle" v-on:click="togglediv('ncaa_football_list')">V</button></h3>
       </div>
       <div v-if="footballGames.length">
-        <h3>⚽ Football <button id="header-toggle" v-on:click="togglediv('football_list')">∇</button></h3>
+        <h3>⚽ Football <button id="header-toggle" v-on:click="togglediv('football_list')">V</button></h3>
       </div>
   </div>
 
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
-        <a href="">
+        <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.away.name)">
           {{ game }}
           <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
         </a>
@@ -31,7 +31,7 @@
 
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
-          <a href="">
+          <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
             {{ game }}
             <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
           </a>
@@ -40,7 +40,7 @@
           
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
-        <a>
+        <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
           {{ game }}
           <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
         </a>  
@@ -49,16 +49,16 @@
 
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
-        <a>
-          <!-- {{ game }} -->
-          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+        <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
+          {{ game }}
+          <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
         </a>
       </li>
     </ul>
         
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
-        <a>
+        <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
           {{ game }}
           <!-- {{ game.teams.away.name }} vs {{ game.teams.home.name }} -->
         </a>
@@ -117,7 +117,7 @@ export default {
       // NFL
       try {
         const response = await this.$http.get('http://localhost:8000/ame_football_games_today/1/');
-        if(response != null) {
+        if(response != undefined) {
           this.NFLGames = response.data.response;
         }
       } catch (error) {
@@ -128,7 +128,7 @@ export default {
       // NCAA
       try {
         const response = await this.$http.get('http://localhost:8000/ame_football_games_today/2/');
-        if(response != null) {
+        if(response != undefined) {
           this.NCAAGames = response.data.response;
         }
       } catch (error) {
@@ -137,12 +137,10 @@ export default {
     },
 
     sendCrawlerParams(homeTeam, awayTeam) {
-      this.$emit("crawler-params", {homeTeam, awayTeam})
+      this.$emit("scraper-params", {homeTeam, awayTeam})
     },
 
     togglediv: function (name) {
-      this.sendCrawlerParams("test", "test")
-      
       var div = document.getElementsByClassName(name)[0]
 
       if(div.style.display == "flex"){
@@ -172,12 +170,13 @@ export default {
 <style scoped>
 .website-header{
   padding: 10px 40px;
-  background-color:blanchedalmond;
-  border-bottom: .3em solid rgb(224, 193, 146) ;
+  background-color: #FDB927;
+  /* border-bottom: .3em solid #ca9420; */
+  border-radius: 0 0 12px 12px;
 }
 
 .title{
-  color: darkslateblue;
+  color: #552583;
 }
 
 .baseball_list,
@@ -197,18 +196,24 @@ export default {
   justify-content: flex-start;
   column-gap: 1rem;
   text-align: center;
+  height: 400%;
 }
 
+/* button {
+  background-color: #552583;
+  color: #000000;
+} */
 h1 {
+  margin: 0;
   text-align: left;
 }
 h2 {
-  color: darkslateblue;
+  color: #552583;
   margin: .1rem;
   text-align: left;
 }
 h3 {
-  color: darkslateblue;
+  color: #552583;
   position: relative;
 }
 ul {
@@ -227,7 +232,7 @@ li {
   padding: .2rem;
   border-radius: 1px;
   border-style: solid;
-  border-color: darkslateblue;
+  border-color: #552583;
   background-color: rgb(255, 246, 233);
 }
 li a {
@@ -259,8 +264,9 @@ li a:focus:before {
 } */
 
 #header-toggle {
-  background-color: transparent;
-  border-radius: 12px;
+  background-color: #70707065;
+  border-color: #552583;
+  border-radius: 180px;
   vertical-align: center;
 }
 </style>

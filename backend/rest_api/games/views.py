@@ -181,5 +181,6 @@ def ame_football_games_today(request, league):
         # get all the football games
         response = requests.get('https://api-american-football.p.rapidapi.com/games', headers=headers, params=params)
         ame_football_games = response.json()
-        
-        return JsonResponse(ame_football_games) #TODO: use serializer + model
+
+        if(JsonResponse(ame_football_games).getvalue != 0):
+            return JsonResponse(ame_football_games) #TODO: use serializer + model

@@ -22,7 +22,7 @@
 
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
-        <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.away.name)">
+        <a role="button" v-on:click="sendScraperParams(game)">
           {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>
       </li>
@@ -30,7 +30,7 @@
 
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
-          <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
+          <a role="button" v-on:click="sendScraperParams(game)">
             {{ game.teams.away.name }} @ {{ game.teams.home.name }}
           </a>
         </li>
@@ -38,7 +38,7 @@
           
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
-        <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
+        <a role="button" v-on:click="sendScraperParams(game)">
           {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>  
       </li>
@@ -46,7 +46,7 @@
 
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
-        <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
+        <a role="button" v-on:click="sendScraperParams(game)">
           {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>
       </li>
@@ -54,7 +54,7 @@
         
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
-        <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
+        <a role="button" v-on:click="sendScraperParams(game)">
           {{ game.teams.away.name }} vs {{ game.teams.home.name }}
         </a>
       </li>
@@ -105,9 +105,8 @@ export default {
       }
     },
     async getTodaysNFLGames() {
-      // NFL
       try {
-        const response = await this.$http.get('http://localhost:8000/ame_football_games_today/1/');
+        const response = await api.get('nfl');
         if(response != undefined) {
           this.NFLGames = response.data.response;
         }
@@ -116,9 +115,8 @@ export default {
       }
     },
     async getTodaysNCAAGames() {
-      // NCAA
       try {
-        const response = await this.$http.get('http://localhost:8000/ame_football_games_today/2/');
+        const response = await api.get('ncaa');
         if(response != undefined) {
           this.NCAAGames = response.data.response;
         }
@@ -127,8 +125,8 @@ export default {
       }
     },
 
-    sendCrawlerParams(homeTeam, awayTeam) {
-      this.$emit("scraper-params", {homeTeam, awayTeam})
+    sendScraperParams(selectedGame) {
+      this.$emit("scraper-params", { home: selectedGame.teams.home.name, away: selectedGame.teams.away.name })
     },
 
     togglediv: function (name) {
@@ -161,15 +159,10 @@ export default {
 <style scoped>
 .website-header{
   padding: 10px 40px;
-  background-color: #FDB927;
+  background-color: #005A9C;
   /* border-bottom: .3em solid #ca9420; */
   border-radius: 0 0 12px 12px;
 }
-
-.title{
-  color: #552583;
-}
-
 .baseball_list,
 .basketball_list,
 .nfl_football_list,
@@ -191,7 +184,7 @@ export default {
 }
 
 /* button {
-  background-color: #552583;
+  background-color: #005A9C;
   color: #000000;
 } */
 h1 {
@@ -199,12 +192,12 @@ h1 {
   text-align: left;
 }
 h2 {
-  color: #552583;
+  color: white ;
   margin: .1rem;
   text-align: left;
 }
 h3 {
-  color: #552583;
+  color: white ;
   position: relative;
 }
 ul {
@@ -221,12 +214,14 @@ li {
   display: flex;
   align-items: center;
   padding: .2rem;
-  border-radius: 1px;
-  border-style: solid;
-  border-color: #552583;
-  background-color: rgb(255, 246, 233);
+  border-radius: 5px;
+  /* border-style: dotted;
+  border-color: black; */
+  background-color: rgb(255, 255, 255);
 }
 li a {
+  padding: .2rem;
+  border-radius: 12px;
   position: relative;
   /* display: block; */
   color: black;
@@ -255,8 +250,8 @@ li a:focus:before {
 } */
 
 #header-toggle {
-  background-color: #70707065;
-  border-color: #552583;
+  background-color: #c93b3dc0 ;
+  border-color: #EF3E42 ;
   border-radius: 180px;
   vertical-align: center;
 }

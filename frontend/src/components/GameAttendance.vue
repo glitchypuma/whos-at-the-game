@@ -10,9 +10,9 @@ export default {
 
     props: {
         /** Pass anything needed to scrape twitter */
-        params: {
-            homeTeam: String,
-            awayTeam: String
+        game: {
+            home: String, 
+            away: String
         }
     }
 }

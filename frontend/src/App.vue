@@ -1,12 +1,9 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <!-- for SportsGamesHeader, make the "current game" the prop to highlight it -->
-  <SportsGamesHeader @scraper-params="getscraperParams"/>
-  <WebsiteTitle />
-  <LandingPage v-if="viewingGame" />
-  <GameAttendance v-if="!viewingGame" :params="scraperParams"/>
-  <!-- <SportsGamesHeader v-bind:baseballGames="baseballGames"/>  -->
-  <!-- GAME COMPONENT HERE , pass through specific sporting event prop -->
+  <SportsGamesHeader @scraper-params="getScraperParams"/>
+  <WebsiteTitle :selectedGameString="gameString"/>
+  <LandingPage v-if="!viewingGame" />
+  <GameAttendance v-if="viewingGame" :selectedGame="scraperParams"/>
   <!-- FOOTER COMPONENT HERE -->
 </template>
 
@@ -28,15 +25,20 @@ export default {
   data () {
     return {
       scraperParams: {},
-      viewingGame: false
+      viewingGame: false,
+      gameString: ''
     }
   },
 
   methods: {
-    getscraperParams(params) {
-      console.log(params)
-      this.scraperParams = params;
+    getScraperParams(game) {
+      console.log(game)
+      this.scraperParams = game;
       this.viewingGame = true;
+      this.gameString = this.setGameString(game);
+    },
+    setGameString(game) {
+      return game.away + " @ " + game.home
     }
   }
 };
@@ -52,7 +54,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #552583;
+  color: black;
   /* background-color: blanchedalmond; */
 }
 

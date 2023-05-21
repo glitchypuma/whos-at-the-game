@@ -34,8 +34,9 @@ class BasketballGame(models.Model):
     
 class FootballGame(models.Model):
     date_start = models.DateTimeField(default= get_default_date_start(), db_comment="Date football game is slated to start, formatted as YYYY-mm-dd")
-    time_start = models.CharField(null=True, db_comment="Time baseball game is slated to start, formatted as hh:mm")
+    time_start = models.TimeField(null=True, db_comment="Time baseball game is slated to start in Timestamp")
     season = models.CharField(null=True, max_length=50)
+    round = models.CharField(null=True)
     home_team = models.CharField(max_length=100)
     away_team = models.CharField(max_length=100)
     country = models.CharField(null=True, db_comment="The country this game is taking place in")

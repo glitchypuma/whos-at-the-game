@@ -23,7 +23,7 @@
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
         <a role="button" @mouseover="sendGameString(game)" v-on:click="sendScraperParams(game)">
-          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+          {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
     </ul>
@@ -31,7 +31,7 @@
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
           <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
-            {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+            {{ game.away_team }} @ {{ game.home_team }}
           </a>
         </li>
       </ul>
@@ -39,7 +39,7 @@
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
         <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
-          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+          {{ game.away_team }} @ {{ game.home_team }}
         </a>  
       </li>
     </ul>
@@ -47,7 +47,7 @@
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
         <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
-          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+          {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
     </ul>
@@ -55,7 +55,7 @@
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
         <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
-          {{ game.teams.away.name }} vs {{ game.teams.home.name }}
+          {{ game.away_team }} vs {{ game.home_team }}
         </a>
       </li>
     </ul>
@@ -83,7 +83,7 @@ export default {
     async getTodaysBaseballGames() {
       try {
         const response = await api.get('baseball');
-        this.baseballGames = response.data.response;
+        this.baseballGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -91,7 +91,7 @@ export default {
     async getTodaysBasketballGames() {
       try {
         const response = await api.get('basketball');
-        this.basketballGames = response.data.response;
+        this.basketballGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -99,7 +99,7 @@ export default {
     async getTodaysFootballGames() {
       try {
         const response = await api.get('football');
-        this.footballGames = response.data.response;
+        this.footballGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -126,10 +126,10 @@ export default {
     },
 
     sendScraperParams(selectedGame) {
-      this.$emit("scraper-params", { home: selectedGame.teams.home.name, away: selectedGame.teams.away.name })
+      this.$emit("scraper-params", { home: selectedGame.home_team, away: selectedGame.away_team })
     },
     sendGameString(game) {
-      this.$emit("game-string", game.teams.home.name + " @ " + game.teams.away.name )
+      this.$emit("game-string", game.home_team + " game" )
     },
 
     togglediv: function (name) {

@@ -23,8 +23,7 @@
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
         <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.away.name)">
-          {{ game }}
-          <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>
       </li>
     </ul>
@@ -32,8 +31,7 @@
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
           <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
-            {{ game }}
-            <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+            {{ game.teams.away.name }} @ {{ game.teams.home.name }}
           </a>
         </li>
       </ul>
@@ -41,8 +39,7 @@
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
         <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
-          {{ game }}
-          <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>  
       </li>
     </ul>
@@ -50,8 +47,7 @@
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
         <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
-          {{ game }}
-          <!-- {{ game.teams.away.name }} @ {{ game.teams.home.name }} -->
+          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>
       </li>
     </ul>
@@ -59,8 +55,7 @@
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
         <a role="button" v-on:click="sendCrawlerParams(game.teams.away.name, game.teams.home.name)">
-          {{ game }}
-          <!-- {{ game.teams.away.name }} vs {{ game.teams.home.name }} -->
+          {{ game.teams.away.name }} vs {{ game.teams.home.name }}
         </a>
       </li>
     </ul>
@@ -69,29 +64,25 @@
 </template>
 
 <script>
+import api from '../api/api.js'
+
 export default {
   name: 'SportsGamesHeader',
 
   data() {
     return {
-      // baseballGames: [],
-      // basketballGames: [],
-      // NFLGames: [],
-      // NCAAGames: [],
-      // footballGames: []
-
-      baseballGames: ['New York Yankees @ Toronto Blue Jays', 'Washington Nationals @ Miami Marlins', 'Minnesota Twins @ Los Angeles Dodgers', 'Pittsburgh Pirates @ Detriot Tigers', 'Los Angeles Angels @ Baltimore Orioles'],
-      basketballGames: ['Los Angeles Lakers @ Denver Nuggets', 'Miami Heat @ Boston Celtics'],
+      baseballGames: [],
+      basketballGames: [],
       NFLGames: [],
       NCAAGames: [],
-      footballGames: ['Internazionale v AC Milan', 'Luton Town v Sunderland', 'FC Groningen v Ajax Amsterdam', 'One Knoxville v Chattanooga Red Wolves']
+      footballGames: []
     };
   },
 
   methods: {
     async getTodaysBaseballGames() {
       try {
-        const response = await this.$http.get('http://localhost:8000/baseball_games_today/');
+        const response = await api.get('baseball');
         this.baseballGames = response.data.response;
       } catch (error) {
         console.log(error);
@@ -99,7 +90,7 @@ export default {
     },
     async getTodaysBasketballGames() {
       try {
-        const response = await this.$http.get('http://localhost:8000/basketball_games_today/');
+        const response = await api.get('basketball');
         this.basketballGames = response.data.response;
       } catch (error) {
         console.log(error);
@@ -161,8 +152,8 @@ export default {
     this.getTodaysBaseballGames();
     this.getTodaysBasketballGames();
     this.getTodaysFootballGames();
-    this.getTodaysNFLGames();
-    this.getTodaysNCAAGames();
+    // this.getTodaysNFLGames();
+    // this.getTodaysNCAAGames();
   }
 }
 </script>

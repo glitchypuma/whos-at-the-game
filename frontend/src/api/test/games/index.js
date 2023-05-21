@@ -1,5 +1,6 @@
 import * as baseballGames from './baseball.js'
 import * as basketballGames from './basketball.js'
+import * as footballGames from './football.js'
 
 export default {
    get(sport) {
@@ -13,7 +14,7 @@ export default {
            case 'ncaa':
                return null;
            case 'football':
-               return null;
+               return { data: footballGames.mls };
        }
        return Error(sport + " was not recognized as a sport!")
    }

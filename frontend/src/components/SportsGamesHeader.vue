@@ -98,7 +98,7 @@ export default {
     },
     async getTodaysFootballGames() {
       try {
-        const response = await this.$http.get('http://localhost:8000/football_games_today/');
+        const response = await api.get('football');
         this.footballGames = response.data.response;
       } catch (error) {
         console.log(error);

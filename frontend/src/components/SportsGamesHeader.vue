@@ -22,7 +22,7 @@
 
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
-        <a role="button" v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendGameString(game)" v-on:click="sendScraperParams(game)">
           {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>
       </li>
@@ -30,7 +30,7 @@
 
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
-          <a role="button" v-on:click="sendScraperParams(game)">
+          <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
             {{ game.teams.away.name }} @ {{ game.teams.home.name }}
           </a>
         </li>
@@ -38,7 +38,7 @@
           
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
-        <a role="button" v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
           {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>  
       </li>
@@ -46,7 +46,7 @@
 
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
-        <a role="button" v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
           {{ game.teams.away.name }} @ {{ game.teams.home.name }}
         </a>
       </li>
@@ -54,7 +54,7 @@
         
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
-        <a role="button" v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
           {{ game.teams.away.name }} vs {{ game.teams.home.name }}
         </a>
       </li>
@@ -127,6 +127,9 @@ export default {
 
     sendScraperParams(selectedGame) {
       this.$emit("scraper-params", { home: selectedGame.teams.home.name, away: selectedGame.teams.away.name })
+    },
+    sendGameString(game) {
+      this.$emit("game-string", game.teams.home.name + " @ " + game.teams.away.name )
     },
 
     togglediv: function (name) {
@@ -250,8 +253,8 @@ li a:focus:before {
 } */
 
 #header-toggle {
-  background-color: #a5acaf9a  ;
-  border-color: #A5ACAF  ;
+  background-color: #a5acaf9a;
+  border-color: #A5ACAF;
   border-radius: 180px;
   vertical-align: center;
 }

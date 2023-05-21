@@ -1,6 +1,6 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <SportsGamesHeader @scraper-params="getScraperParams"/>
+  <SportsGamesHeader @game-string="setGameString" @scraper-params="getScraperParams"/>
   <WebsiteTitle :selectedGameString="gameString"/>
   <LandingPage v-if="!viewingGame" />
   <GameAttendance v-if="viewingGame" :selectedGame="scraperParams"/>
@@ -35,10 +35,9 @@ export default {
       console.log(game)
       this.scraperParams = game;
       this.viewingGame = true;
-      this.gameString = this.setGameString(game);
     },
-    setGameString(game) {
-      return game.away + " @ " + game.home
+    setGameString(gameString) {
+      this.gameString = gameString
     }
   }
 };

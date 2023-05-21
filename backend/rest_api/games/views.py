@@ -146,3 +146,41 @@ def football_games_today(request):
         
         return JsonResponse(football_games) #TODO: use serializer + model
     
+''' AMERICAN FOOTBALL '''
+
+@csrf_exempt
+def ame_football_games_today(request, league):
+    # TODO: BETTER KEY MANAGEMENT
+    headers = {
+        'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+        }
+    
+    ### Set request parameters
+    today = datetime.today().strftime('%Y-%m-%d')
+    match league:
+        case 1:
+            # NFL seasons run Sept-Jan, so season year can fall in the next year
+            # hacky-solution is to subtract 60 days before evaluating season year
+            season = (datetime.today() - timedelta(days=60)).strftime('%Y') 
+        case 2:
+            # NCAA seasons runs Aug-Dec, so season year will always fall on today's year
+            season =  datetime.today().strftime('%Y')
+
+    params = {
+        'timezone': 'America/Los_Angeles',
+        'date': today,
+        'season': season,
+        'league': str(league)
+    }
+
+    '''
+    List all of today's football games for given league using API-FOOTBALL
+    '''
+    if(request.method == 'GET'):
+        # get all the football games
+        response = requests.get('https://api-american-football.p.rapidapi.com/games', headers=headers, params=params)
+        ame_football_games = response.json()
+
+        if(JsonResponse(ame_football_games).getvalue != 0):
+            return JsonResponse(ame_football_games) #TODO: use serializer + model

@@ -32,12 +32,14 @@ export default {
 
   methods: {
     getScraperParams(game) {
-      console.log(game)
       this.scraperParams = game;
+      this.gameString = game.home_team + " game" ;
       this.viewingGame = true;
     },
     setGameString(gameString) {
-      this.gameString = gameString
+      if(!this.viewingGame){
+        this.gameString = gameString;
+      }
     }
   }
 };

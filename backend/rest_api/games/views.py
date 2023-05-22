@@ -241,7 +241,7 @@ def post_american_football_games(data):
             'league': game['league']['country']['name'],
             'completed': True if game['game']['status']['short'] == 'FT' else False
         })
-    serializer = BasketballGameSerializer(data=mapped_american_football_games, many=True)
+    serializer = AmericanFootballGameSerializer(data=mapped_american_football_games, many=True)
     if(serializer.is_valid()):
         serializer.save()
         return JsonResponse(serializer.data, safe=False, status=201)

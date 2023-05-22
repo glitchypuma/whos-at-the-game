@@ -22,7 +22,7 @@
 
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
-        <a role="button" @mouseover="sendGameString(game)" v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)" v-on:click="sendScraperParams(game)">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
@@ -30,7 +30,7 @@
 
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
-          <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
+          <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
             {{ game.away_team }} @ {{ game.home_team }}
           </a>
         </li>
@@ -38,7 +38,7 @@
           
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
-        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>  
       </li>
@@ -46,7 +46,7 @@
 
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
-        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
@@ -54,7 +54,7 @@
         
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
-        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
           {{ game.away_team }} vs {{ game.home_team }}
         </a>
       </li>
@@ -122,9 +122,9 @@ export default {
     },
 
     sendScraperParams(selectedGame) {
-      this.$emit("scraper-params", { home: selectedGame.home_team, away: selectedGame.away_team })
+      this.$emit("scraper-params", selectedGame)
     },
-    sendGameString(game) {
+    sendHoveredGameString(game) {
       this.$emit("game-string", game.home_team + " game" )
     },
 

@@ -1,10 +1,10 @@
-import * as baseballGames from './baseball.js'
-import * as basketballGames from './basketball.js'
-import * as footballGames from './football.js'
+import * as baseballGames from './games/baseball.js'
+import * as basketballGames from './games/basketball.js'
+import * as footballGames from './games/football.js'
 
 export default {
-   get(sport) {
-       switch(sport) {
+   get(path) {
+       switch(path) {
            case 'baseball':
                return { data:  baseballGames.mlb }
            case 'basketball':
@@ -16,6 +16,6 @@ export default {
            case 'football':
                return { data: footballGames.mls };
        }
-       return Error(sport + " was not recognized as a sport!")
+       return Error(path + " is not a recognized path!")
    }
 };

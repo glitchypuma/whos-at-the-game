@@ -8,8 +8,9 @@ import axios from "axios";
     footballPath: 'football_games_today/',
     nflPath: 'ame_football_games_today/1/',
     ncaaPath: 'ame_football_games_today/2/',
-    get(sport) {
-        switch(sport) {
+    scraperPath: 'baseball_games_today/', // TODO: add a case for this path
+    get(path) {
+        switch(path) {
             case 'baseball':
                 return axios.get(root + this.baseballPath)
             case 'basketball':
@@ -21,6 +22,6 @@ import axios from "axios";
             case 'football':
                 return axios.get(root + this.footballPath)
         }
-        return Error(sport + " was not recognized as a sport!")
+        return Error(path + " was not recognized as a path!")
     }
  };

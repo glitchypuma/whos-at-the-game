@@ -37,6 +37,21 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-token-bucket"
+version = "0.2.4"
+description = "Django Tocken Bucket support."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django_token_bucket-0.2.4-py3-none-any.whl", hash = "sha256:0e51fc913cae3fa67a2ed441e6e2095c043edc8348b1987ba4c39cdf35c8bc26"},
+    {file = "django_token_bucket-0.2.4.tar.gz", hash = "sha256:8648f8568d8e5c8d0847f4fafeacede593cf2c2149367356c849bd8647abbc24"},
+]
+
+[package.dependencies]
+Django = ">=1.11"
+
+[[package]]
 name = "djangorestframework"
 version = "3.14.0"
 description = "Web APIs for Django, made easy."
@@ -96,4 +111,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10.2"
-content-hash = "05d779a0127f947915357171e6e8bd885489b5dc7b520cb6bc20bb9ae1fa508f"
+content-hash = "fa1d0c9b074c3e13339322d68dc89a07156d4a6fc4f709af4ddb2176fb1a87d2"

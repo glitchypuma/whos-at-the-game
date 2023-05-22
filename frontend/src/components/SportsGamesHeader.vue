@@ -22,40 +22,40 @@
 
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
-        <a role="button" @mouseover="sendGameString(game)" v-on:click="sendScraperParams(game)">
-          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+        <a role="button" @mouseover="sendHoveredGameString(game)" v-on:click="sendScraperParams(game)">
+          {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
     </ul>
 
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
-          <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
-            {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+          <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+            {{ game.away_team }} @ {{ game.home_team }}
           </a>
         </li>
       </ul>
           
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
-        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
-          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+          {{ game.away_team }} @ {{ game.home_team }}
         </a>  
       </li>
     </ul>
 
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
-        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
-          {{ game.teams.away.name }} @ {{ game.teams.home.name }}
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+          {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
     </ul>
         
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
-        <a role="button" @mouseover="sendGameString(game)"  v-on:click="sendScraperParams(game)">
-          {{ game.teams.away.name }} vs {{ game.teams.home.name }}
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+          {{ game.away_team }} vs {{ game.home_team }}
         </a>
       </li>
     </ul>
@@ -83,7 +83,7 @@ export default {
     async getTodaysBaseballGames() {
       try {
         const response = await api.get('baseball');
-        this.baseballGames = response.data.response;
+        this.baseballGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -91,7 +91,7 @@ export default {
     async getTodaysBasketballGames() {
       try {
         const response = await api.get('basketball');
-        this.basketballGames = response.data.response;
+        this.basketballGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -99,7 +99,7 @@ export default {
     async getTodaysFootballGames() {
       try {
         const response = await api.get('football');
-        this.footballGames = response.data.response;
+        this.footballGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -107,9 +107,7 @@ export default {
     async getTodaysNFLGames() {
       try {
         const response = await api.get('nfl');
-        if(response != undefined) {
-          this.NFLGames = response.data.response;
-        }
+        this.NFLGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -117,19 +115,17 @@ export default {
     async getTodaysNCAAGames() {
       try {
         const response = await api.get('ncaa');
-        if(response != undefined) {
-          this.NCAAGames = response.data.response;
-        }
+        this.NCAAGames = response.data;
       } catch (error) {
         console.log(error);
       }
     },
 
     sendScraperParams(selectedGame) {
-      this.$emit("scraper-params", { home: selectedGame.teams.home.name, away: selectedGame.teams.away.name })
+      this.$emit("scraper-params", selectedGame)
     },
-    sendGameString(game) {
-      this.$emit("game-string", game.teams.home.name + " @ " + game.teams.away.name )
+    sendHoveredGameString(game) {
+      this.$emit("game-string", game.home_team + " game" )
     },
 
     togglediv: function (name) {
@@ -153,8 +149,8 @@ export default {
     this.getTodaysBaseballGames();
     this.getTodaysBasketballGames();
     this.getTodaysFootballGames();
-    // this.getTodaysNFLGames();
-    // this.getTodaysNCAAGames();
+    this.getTodaysNFLGames();
+    this.getTodaysNCAAGames();
   }
 }
 </script>

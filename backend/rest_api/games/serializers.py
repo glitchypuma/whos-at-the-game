@@ -1,6 +1,21 @@
 from rest_framework import routers,serializers,viewsets
-from .models import BaseballGame
+from .models import BaseballGame, BasketballGame, FootballGame, AmericanFootballGame
 class BaseballGameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BaseballGame
-        fields = ['id', 'home_team', 'away_team', 'start_time', 'completed']
+        fields = ['id', 'date_start', 'time_start', 'season', 'week', 'home_team', 'away_team', 'country', 'league', 'completed']
+
+class BasketballGameSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = BasketballGame
+        fields = ['id', 'date_start', 'time_start', 'season', 'week', 'home_team', 'away_team', 'country', 'league', 'completed']
+
+class FootballGameSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = FootballGame
+        fields = ['id', 'date_start', 'time_start', 'season', 'round', 'home_team', 'away_team', 'country', 'league', 'completed']
+
+class AmericanFootballGameSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = AmericanFootballGame
+        fields = ['id', 'date_start', 'time_start', 'season', 'week', 'home_team', 'away_team', 'country', 'league', 'completed']

@@ -1,3 +1,4 @@
+import json
 import sys
 from django.shortcuts import render
 import snscrape.modules.twitter as sntwitter
@@ -8,51 +9,38 @@ import requests
 #snscraper dev version: 0.6.2.20230321.dev12+gea49c19
 
 # Create your views here.
-def scrape_twitter(request, away, home):
+#def scrape_twitter(request, away, home):
+def scrape_twitter(away, home):
 
-    
-    if(request.method == "GET"):
-        print("Good request")
-        scraper = sntwitter.TwitterSearchScraper(home + " " + away)
+    scraper = sntwitter.TwitterSearchScraper(home + " " + away)
 
-<<<<<<< HEAD
-        tweets = []
+    tweets = []
 
-        for i, tweet in enumerate(scraper.get_items()):
-            data = [tweet.date, 
-                    tweet.id, 
-                    tweet.content, 
-                    tweet.user.username, 
-                    tweet.likeCount, 
-                    tweet.retweetCount
-            ]
-            tweets.append(data)
-            if i > 100:
-                break
-
-        tweets_df = pd.DataFrame(tweets, columns=['date', 'id', 'content', 'username', 
-                                                    'like_count', 'retweet_count'])
-        return JsonResponse(tweets_df.to_json(), safe=False)
-    else:
-        return HttpResponse(status=400)
-=======
     for i, tweet in enumerate(scraper.get_items()):
-        data = [tweet.date, 
-                tweet.id, 
-                tweet.content, 
-                tweet.user.username, 
-                tweet.likeCount, 
-                tweet.retweetCount
-        ]
+        # data = [tweet.date, 
+        #         tweet.id, 
+        #         tweet.rawContent, 
+        #         tweet.user.username, 
+        #         tweet.likeCount, 
+        #         tweet.retweetCount
+        # ]
+        data = [tweet.rawContent]
         tweets.append(data)
-        if i > 10:
+        if i > 1000:
             break
 
-    tweets_df = pd.DataFrame(tweets, columns=['date', 'id', 'content', 'username', 
-                                                'like_count', 'retweet_count'])
-    print(tweets_df['content'].to_string)
->>>>>>> c006c2ff72804cd6312e4797cb2b58b8a633e646
+    # tweets_df = pd.DataFrame(tweets, columns=['date', 'id', 'content', 'username', 
+    #                                             'like_count', 'retweet_count'])
+    tweets_str = ' '.join(str(x) for x in tweets)
+    return tweets_str
+    
+    
 
 
-# if __name__ == '__main__':
-#     scrape_twitter("dodgers", "cardinals")
+if __name__ == '__main__':
+    tweets_str = scrape_twitter("dodgers", "braves")
+    file = open("tweets.txt", "w")
+    file.write(tweets_str)
+    file.close()
+    # tweets_df['content'].to_string(file, index_names=False)
+    # print(tweets_df['content'].to_json())

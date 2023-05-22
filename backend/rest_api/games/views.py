@@ -6,9 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 # for sending response to the client
 from django.http import HttpResponse, JsonResponse
 # API definition for baseballgame
-from .serializers import BaseballGameSerializer, BasketballGameSerializer
+from .serializers import BaseballGameSerializer, BasketballGameSerializer, FootballGameSerializer
 # baseballgame model
-from .models import BaseballGame, BasketballGame
+from .models import BaseballGame, BasketballGame, FootballGame
 import requests
 from datetime import datetime, timedelta
 from django.http import JsonResponse
@@ -20,65 +20,66 @@ headers = {
     }
 
 
+
 ''' BASEBALL (MLB) '''
 @csrf_exempt
 def baseball_games_today(request):
-    today = datetime.today().strftime('%Y-%m-%d')
-    
+    today = datetime.today()
     '''
     Return list of all of today's baseball games
     '''
     if(request.method == 'GET'):
         # does db have today's games? 
-        baseballGame = BaseballGame.objects.first
-        serializedGame = BaseballGameSerializer(baseballGame, many=False)
-        if(serializedGame.date_start == today): #if so, GET baseball games from db
-            baseball_games = BaseballGame.objects.all()
-            serializer = BaseballGameSerializer(baseball_games, many=True)
-            return JsonResponse(serializer.data,safe=False)
+        baseballGame = BaseballGame.objects.first()
+        try:
+            baseballGame.date_start
+        except AttributeError:
+            game_exists = False
+        else:
+            game_exists = True
+
+        if(game_exists and baseballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')): #if so, GET baseball games from db
+            baseball_games = BaseballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
+            return JsonResponse(list(baseball_games.values()), safe=False)
         else: #if not, GET baseball games from API and save to db for future retrieval
-            season = datetime.today().strftime('%Y')
+            season = today.strftime('%Y')
             params = {
                 'timezone': 'America/Los_Angeles',
-                'date': today,
+                'date': today.strftime('%Y-%m-%d'),
                 'season': season,
                 'league': '1'
             }
             response = requests.get('https://api-baseball.p.rapidapi.com/games', headers=headers, params=params)
             baseball_games = response.json()
-            serializer = BaseballGameSerializer(data=baseball_games.data, many=True)
-            
-            post_baseball_game(data=baseball_games.data)
+            # serializer = BaseballGameSerializer(data=baseball_games)
+            # serialize + post baseball games
+            return post_baseball_game(baseball_games)
 
-            # check if the information received is okay
-            # if(post_response.status ?)
-            return JsonResponse(serializer.data, safe=False)
-            
-    elif(request.method == 'POST'):
-        # parse the incoming information
-        data = JSONParser().parse(request)
-        # instanciate with the serializer
-        serializer = BaseballGameSerializer(data=data)
-        # check if the sent information is okay
-        if(serializer.is_valid()):
-            # if okay, save it on the database
-            serializer.save()
-            # provide a Json Response with the data that was saved
-            return JsonResponse(serializer.data, status=201)
-            # provide a Json Response with the necessary error information
-        return JsonResponse(serializer.errors, status=400)
+def post_baseball_game(data):
+    parameters = data['parameters']
+    raw_games = data['response']
+    mapped_baseball_games = [ ]
+    for game in raw_games:
+        mapped_baseball_games.append({
+            'id': game['id'],
+            'date_start': parameters['date'],
+            'time_start': game['time'],
+            'season': parameters['season'],
+            'week': game['week'],
+            'home_team': game['teams']['home']['name'],
+            'away_team': game['teams']['away']['name'],
+            'country': game['country']['name'],
+            'league': game['league']['name'],
+            'completed': True if game['status']['short'] == 'FT' else False
+        })
 
-def post_baseball_game(response):
-    # parse the incoming information
-    data = JSONParser().parse(response)
-    # instanciate with the serializer
-    serializer = BaseballGameSerializer(data=data)
+    serializer = BaseballGameSerializer(data=mapped_baseball_games, many=True)
     # check if the sent information is okay
     if(serializer.is_valid()):
         # if okay, save it on the database
         serializer.save()
         # provide a Json Response with the data that was saved
-        return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.data, safe=False, status=201)
         # provide a Json Response with the necessary error information
     return JsonResponse(serializer.errors, status=400)
 
@@ -94,7 +95,7 @@ def baseball_game_detail(request, pk):
         # parse the incoming information
         data = JSONParser().parse(request)  
         # instanciate with the serializer
-        serializer = BaseballGamekSerializer(task, data=data)
+        serializer = BaseballGameSerializer(task, data=data)
         # check whether the sent information is okay
         if(serializer.is_valid()):  
             # if okay, save it on the database
@@ -109,104 +110,122 @@ def baseball_game_detail(request, pk):
         # return a no content response.
         return HttpResponse(status=204)
     
+
+
 ''' BASKETBALL (NBA) '''
 @csrf_exempt
 def basketball_games_today(request):
-    today = datetime.today().strftime('%Y-%m-%d')
+    today = datetime.today()
 
     '''
     Return list of all of today's basketball games
     '''
     if(request.method == 'GET'):
-        basketballGame = BasketballGame.objects.first
-        serializedGame = BasketballGameSerializer(basketballGame, many=False)
-        if(serializedGame.date_start == today):
-            basketball_games = BasketballGame.objects.all()
-            serializer = BasketballGameSerializer(basketball_games, many=True)
+        basketballGame = BasketballGame.objects.first()
+        try:
+            basketballGame.date_start
+        except AttributeError:
+            game_exists = False
+        else:
+            game_exists = True
+        if(game_exists and basketballGame.date_start == today.strftime('%Y-%m-%d')):
+            basketball_games = BasketballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
+            serializer = BasketballGameSerializer(basketball_games)
             return JsonResponse(serializer.data, safe=False)
         else:
-            season = (datetime.today() - timedelta(days=365)).strftime('%Y') + "-" + datetime.today().strftime('%Y')
+            season = (today - timedelta(days=365)).strftime('%Y') + "-" + today.strftime('%Y')
             params = {
                 'timezone': 'America/Los_Angeles',
-                'date': today,
+                'date': today.strftime('%Y-%m-%d'),
                 'season': season,
                 'league': '12'
             }
             response = requests.get('https://api-basketball.p.rapidapi.com/games', headers=headers, params=params)
             basketball_games = response.json()
-            serializer = BasketballGameSerializer(data=basketball_games, many=True)
+            serializer = BasketballGameSerializer(data=basketball_games)
+            return post_basketball_game(basketball_games)
 
-            post_basketball_game(data=basketball_games.data, many=True)
-            # check if the information received is okay
-            # if(post_response.status ?)
-            return JsonResponse(serializer.data, safe=False)
+def post_basketball_game(data):
+    parameters = data['parameters']
+    raw_games = data['response']
+    mapped_basketball_games = [ ]
+    for game in raw_games:
+        mapped_basketball_games.append({
+            'id': game['id'],
+            'date_start': parameters['date'],
+            'time_start': game['time'],
+            'season': parameters['season'],
+            'week': game['week'],
+            'home_team': game['teams']['home']['name'],
+            'away_team': game['teams']['away']['name'],
+            'country': game['country']['name'],
+            'league': game['league']['name'],
+            'completed': True if game['status']['short'] == 'FT' else False
+        })
 
-def post_baseball_game(response):
-    # parse the incoming information
-    data = JSONParser().parse(response)
     # instanciate with the serializer
-    serializer = BasketballGameSerializer(data=data)
+    serializer = BasketballGameSerializer(data=mapped_basketball_games, many=True)
     # check if the sent information is okay
     if(serializer.is_valid()):
         # if okay, save it on the database
         serializer.save()
         # provide a Json Response with the data that was saved
-        return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.data, safe=False, status=201)
         # provide a Json Response with the necessary error information
     return JsonResponse(serializer.errors, status=400)
             
 ''' FOOTBALL (MLS) '''
 
-@csrf_exempt
-def football_games_today(request):
-    today = datetime.today().strftime('%Y-%m-%d')
-    season = datetime.today().strftime('%Y')
-    params = {
-        'timezone': 'America/Los_Angeles',
-        'date': today,
-        'season': season,
-        'league': '253'
-    }
+# @csrf_exempt
+# def football_games_today(request):
+#     today = datetime.today().strftime('%Y-%m-%d')
+#     season = datetime.today().strftime('%Y')
+#     params = {
+#         'timezone': 'America/Los_Angeles',
+#         'date': today,
+#         'season': season,
+#         'league': '253'
+#     }
 
-    '''
-    List all of today's football games using API-FOOTBALL
-    '''
-    if(request.method == 'GET'):
-        # get all the football games
-        response = requests.get('https://api-football-v1.p.rapidapi.com/v3/fixtures', headers=headers, params=params)
-        football_games = response.json()
+#     '''
+#     List all of today's football games using API-FOOTBALL
+#     '''
+#     if(request.method == 'GET'):
+#         # get all the football games
+#         response = requests.get('https://api-football-v1.p.rapidapi.com/v3/fixtures', headers=headers, params=params)
+#         football_games = response.json()
         
-        return JsonResponse(football_games) #TODO: use serializer + model
+#         return JsonResponse(football_games) #TODO: use serializer + model
     
-''' AMERICAN FOOTBALL '''
+# ''' AMERICAN FOOTBALL '''
 
-@csrf_exempt
-def ame_football_games_today(request, league):
-    ### Set request parameters
-    today = datetime.today().strftime('%Y-%m-%d')
-    match league:
-        case 1:
-            # NFL seasons run Sept-Jan, so season year can fall in the next year
-            # hacky-solution is to subtract 60 days before evaluating season year
-            season = (datetime.today() - timedelta(days=60)).strftime('%Y') 
-        case 2:
-            # NCAA seasons runs Aug-Dec, so season year will always fall on today's year
-            season =  datetime.today().strftime('%Y')
+# @csrf_exempt
+# def ame_football_games_today(request, league):
+#     ### Set request parameters
+#     today = datetime.today().strftime('%Y-%m-%d')
+#     match league:
+#         case 1:
+#             # NFL seasons run Sept-Jan, so season year can fall in the next year
+#             # hacky-solution is to subtract 60 days before evaluating season year
+#             season = (datetime.today() - timedelta(days=60)).strftime('%Y') 
+#         case 2:
+#             # NCAA seasons runs Aug-Dec, so season year will always fall on today's year
+#             season =  datetime.today().strftime('%Y')
 
-    params = {
-        'timezone': 'America/Los_Angeles',
-        'date': today,
-        'season': season,
-        'league': str(league)
-    }
+#     params = {
+#         'timezone': 'America/Los_Angeles',
+#         'date': today,
+#         'season': season,
+#         'league': str(league)
+#     }
 
-    '''
-    List all of today's football games for given league using API-FOOTBALL
-    '''
-    if(request.method == 'GET'):
-        # get all the football games
-        response = requests.get('https://api-american-football.p.rapidapi.com/games', headers=headers, params=params)
-        ame_football_games = response.json()
+#     '''
+#     List all of today's football games for given league using API-FOOTBALL
+#     '''
+#     if(request.method == 'GET'):
+#         # get all the football games
+#         response = requests.get('https://api-american-football.p.rapidapi.com/games', headers=headers, params=params)
+#         ame_football_games = response.json()
 
-        if(JsonResponse(ame_football_games).getvalue != 0):
-            return JsonResponse(ame_football_games) #TODO: use serializer + model
+#         if(JsonResponse(ame_football_games).getvalue != 0):
+#             return JsonResponse(ame_football_games) #TODO: use serializer + model

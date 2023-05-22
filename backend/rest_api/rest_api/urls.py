@@ -24,9 +24,9 @@ urlpatterns = [
 
     path('basketball_games_today/', views.basketball_games_today, name='basketball_today'),
 
-    path('football_games_today/', views.football_games_today, name='football_today'),
+    # path('football_games_today/', views.football_games_today, name='football_today'),
 
-    path('ame_football_games_today/<int:league>/', views.ame_football_games_today, name='ame_football_today'),
+    # path('ame_football_games_today/<int:league>/', views.ame_football_games_today, name='ame_football_today'),
 
     path('admin/', admin.site.urls),
 ]

@@ -23,14 +23,8 @@ def baseball_games_today(request):
     if(request.method == 'GET'):
         # does db have today's games? 
         baseballGame = BaseballGame.objects.first()
-        try:
-            baseballGame.date_start
-        except AttributeError:
-            game_exists = False
-        else:
-            game_exists = True
 
-        if(game_exists and baseballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')): #if so, GET baseball games from db
+        if(check_exists(baseballGame) and baseballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')): #if so, GET baseball games from db
             baseball_games = BaseballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(baseball_games.values()), safe=False)
         else: #if not, GET baseball games from API and save to db for future retrieval
@@ -88,14 +82,8 @@ def basketball_games_today(request):
     '''
     if(request.method == 'GET'):
         basketballGame = BasketballGame.objects.first()
-        try:
-            basketballGame.date_start
-        except AttributeError:
-            game_exists = False
-        else:
-            game_exists = True
 
-        if(game_exists and basketballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')):
+        if(check_exists(basketballGame) and basketballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')):
             basketball_games = BasketballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(basketball_games.values()), safe=False)
         else:
@@ -152,14 +140,8 @@ def football_games_today(request):
     '''
     if(request.method == 'GET'):
         footballGame = FootballGame.objects.first()
-        try:
-            footballGame.date_start
-        except AttributeError:
-            game_exists = False
-        else:
-            game_exists
-        
-        if(game_exists and footballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')):
+
+        if(check_exists(footballGame) and footballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')):
             football_games = FootballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(football_games.values()), safe=False)
         else:
@@ -268,7 +250,7 @@ def post_american_football_games(data):
 ''' UTILS '''
 def check_exists(data):
     try:
-        data.date_start
+        data.id
     except AttributeError:
         return False
     else:

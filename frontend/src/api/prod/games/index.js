@@ -5,9 +5,9 @@ import axios from "axios";
  export default {
     baseballPath: 'baseball_games_today/',
     basketballPath: 'basketball_games_today/',
-    nflPath: 'football_games_today/',
-    ncaaPath: 'ame_football_games_today/1/',
-    footballPath: 'ame_football_games_today/2/',
+    footballPath: 'football_games_today/',
+    nflPath: 'ame_football_games_today/1/',
+    ncaaPath: 'ame_football_games_today/2/',
     get(sport) {
         switch(sport) {
             case 'baseball':

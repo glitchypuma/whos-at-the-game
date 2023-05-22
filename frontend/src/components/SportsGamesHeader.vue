@@ -107,9 +107,7 @@ export default {
     async getTodaysNFLGames() {
       try {
         const response = await api.get('nfl');
-        if(response != undefined) {
-          this.NFLGames = response.data.response;
-        }
+        this.NFLGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -117,9 +115,7 @@ export default {
     async getTodaysNCAAGames() {
       try {
         const response = await api.get('ncaa');
-        if(response != undefined) {
-          this.NCAAGames = response.data.response;
-        }
+        this.NCAAGames = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -153,8 +149,8 @@ export default {
     this.getTodaysBaseballGames();
     this.getTodaysBasketballGames();
     this.getTodaysFootballGames();
-    // this.getTodaysNFLGames();
-    // this.getTodaysNCAAGames();
+    this.getTodaysNFLGames();
+    this.getTodaysNCAAGames();
   }
 }
 </script>

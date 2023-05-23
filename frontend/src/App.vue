@@ -60,6 +60,6 @@ export default {
 }
 
 ::selection {
-  background-color: lightblue;
+  background-color: rgba(0, 128, 0, 0.267);
 }
 </style>

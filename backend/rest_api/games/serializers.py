@@ -1,5 +1,10 @@
 from rest_framework import routers,serializers,viewsets
-from .models import BaseballGame, BasketballGame, FootballGame, AmericanFootballGame
+from .models import GamesMeta, BaseballGame, BasketballGame, FootballGame, AmericanFootballGame
+
+class GamesMetaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GamesMeta
+        fields = ['date_updated']
 class BaseballGameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BaseballGame

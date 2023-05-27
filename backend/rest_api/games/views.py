@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render
 # parsing data from the client
 from rest_framework.parsers import JSONParser
@@ -6,9 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 # for sending response to the client
 from django.http import HttpResponse, JsonResponse
 # API definition for baseballgame
-from .serializers import BaseballGameSerializer, BasketballGameSerializer, FootballGameSerializer, AmericanFootballGameSerializer
+from .serializers import GamesMetaSerializer, BaseballGameSerializer, BasketballGameSerializer, FootballGameSerializer, AmericanFootballGameSerializer
 # baseballgame model
-from .models import BaseballGame, BasketballGame, FootballGame, AmericanFootballGame
+from .models import GamesMeta, BaseballGame, BasketballGame, FootballGame, AmericanFootballGame
 import requests
 from datetime import datetime, timedelta
 from django.http import JsonResponse
@@ -21,16 +22,17 @@ def baseball_games_today(request):
     Return list of all of today's baseball games
     '''
     if(request.method == 'GET'):
-        # does db have today's games? 
-        baseballGame = BaseballGame.objects.first()
+        # does db have today's games?
+        processedToday = GamesMeta.objects.filter(date_updated = today.strftime('%Y-%m-%d')).first()
+        print(processedToday)
 
-        if(check_exists(baseballGame) and baseballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')): #if so, GET baseball games from db
+        if(check_exists(processedToday)): #if so, GET baseball games from db
             baseball_games = BaseballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(baseball_games.values()), safe=False)
         else: #if not, GET baseball games from API and save to db for future retrieval
             # TODO: BETTER KEY MANAGEMENT
             headers = {
-                'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
                 'X-RapidAPI-Host': 'api-baseball.p.rapidapi.com'
                 }
             season = today.strftime('%Y')
@@ -67,6 +69,7 @@ def post_baseball_games(data):
     if(serializer.is_valid()):
         # if okay, save it on the database
         serializer.save()
+        update_date()
         # provide a Json Response with the data that was saved
         return JsonResponse(serializer.data, safe=False, status=201)
         # provide a Json Response with the necessary error information
@@ -81,14 +84,14 @@ def basketball_games_today(request):
     Return list of all of today's basketball games
     '''
     if(request.method == 'GET'):
-        basketballGame = BasketballGame.objects.first()
+        processedToday = GamesMeta.objects.filter(date_updated = today.strftime('%Y-%m-%d')).first()
 
-        if(check_exists(basketballGame) and basketballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')):
+        if(check_exists(processedToday)):
             basketball_games = BasketballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(basketball_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
                 'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com'
             }
             season = (today - timedelta(days=365)).strftime('%Y') + "-" + today.strftime('%Y')
@@ -126,6 +129,7 @@ def post_basketball_games(data):
     if(serializer.is_valid()):
         # if okay, save it on the database
         serializer.save()
+        update_date()
         # provide a Json Response with the data that was saved
         return JsonResponse(serializer.data, safe=False, status=201)
         # provide a Json Response with the necessary error information
@@ -139,14 +143,14 @@ def football_games_today(request):
     List all of today's football games using API-FOOTBALL
     '''
     if(request.method == 'GET'):
-        footballGame = FootballGame.objects.first()
+        processedToday = GamesMeta.objects.filter(date_updated = today.strftime('%Y-%m-%d')).first()
 
-        if(check_exists(footballGame) and footballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')):
+        if(check_exists(processedToday)):
             football_games = FootballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(football_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
                 'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
             }
             season = today.strftime('%Y')
@@ -181,6 +185,7 @@ def post_football_games(data):
     if(serializer.is_valid()):
         # if okay, save it on the database
         serializer.save()
+        update_date()
         # provide a Json Response with the data that was saved
         return JsonResponse(serializer.data, safe=False, status=201)
         # provide a Json Response with the necessary error information
@@ -197,14 +202,14 @@ def ame_football_games_today(request, league):
     Return list of all of today's basketball games
     '''
     if(request.method == 'GET'):
-        footballGame = AmericanFootballGame.objects.first()
+        processedToday = GamesMeta.objects.filter(date_updated = today.strftime('%Y-%m-%d')).first()
 
-        if(check_exists(footballGame) and footballGame.date_start.strftime('%Y-%m-%d') == today.strftime('%Y-%m-%d')):
+        if(check_exists(processedToday)):
             american_football_games = AmericanFootballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(american_football_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
                 'X-RapidAPI-Host': 'api-american-football.p.rapidapi.com'
             }
             match league:
@@ -244,6 +249,7 @@ def post_american_football_games(data):
     serializer = AmericanFootballGameSerializer(data=mapped_american_football_games, many=True)
     if(serializer.is_valid()):
         serializer.save()
+        update_date()
         return JsonResponse(serializer.data, safe=False, status=201)
     return JsonResponse(serializer.errors, status=400)
         
@@ -255,3 +261,13 @@ def check_exists(data):
         return False
     else:
         return True
+    
+def update_date():
+    date = {
+        'date_updated': datetime.today().strftime('%Y-%m-%d')
+    }
+    serializer = GamesMetaSerializer(data=date, many=False)
+    if(serializer.is_valid()):
+        serializer.save()
+        return JsonResponse(serializer.data, safe=False, status=201)
+    return JsonResponse(serializer.errors, status=400)

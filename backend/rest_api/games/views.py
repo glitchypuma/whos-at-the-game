@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render
 # parsing data from the client
 from rest_framework.parsers import JSONParser
@@ -31,7 +32,7 @@ def baseball_games_today(request):
         else: #if not, GET baseball games from API and save to db for future retrieval
             # TODO: BETTER KEY MANAGEMENT
             headers = {
-                'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
                 'X-RapidAPI-Host': 'api-baseball.p.rapidapi.com'
                 }
             season = today.strftime('%Y')
@@ -90,7 +91,7 @@ def basketball_games_today(request):
             return JsonResponse(list(basketball_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
                 'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com'
             }
             season = (today - timedelta(days=365)).strftime('%Y') + "-" + today.strftime('%Y')
@@ -149,7 +150,7 @@ def football_games_today(request):
             return JsonResponse(list(football_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
                 'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
             }
             season = today.strftime('%Y')
@@ -208,7 +209,7 @@ def ame_football_games_today(request, league):
             return JsonResponse(list(american_football_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': 'e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a', 
+                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
                 'X-RapidAPI-Host': 'api-american-football.p.rapidapi.com'
             }
             match league:

@@ -158,7 +158,7 @@ export default {
 <style scoped>
 .website-header{
   padding: 10px 40px;
-  background-color: green;
+  background-color: rgb(0, 128, 0);
   /* border-bottom: .3em solid #ca9420; */
   border-radius: 0 0 12px 12px;
 }

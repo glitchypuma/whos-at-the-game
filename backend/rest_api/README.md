@@ -1,7 +1,7 @@
 ## APIs
 
 We use [axios](https://www.npmjs.com/package/axios) to handle API requests to endpoints provided by [API-SPORTS](https://rapidapi.com/user/api-sports).  
-  * [Basebal](https://rapidapi.com/api-sports/api/api-baseball/)
+  * [Baseball](https://rapidapi.com/api-sports/api/api-baseball/)
   * [Basketball](https://rapidapi.com/api-sports/api/api-basketball/)
   * [American Football](https://rapidapi.com/api-sports/api/api-american-football/)
   * [Football](https://rapidapi.com/api-sports/api/api-football/)

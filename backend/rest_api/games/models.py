@@ -4,6 +4,9 @@ from datetime import datetime
 def get_default_date_start():
     return datetime.today().strftime('%Y-%m-%d')
 
+class GamesMeta(models.Model):
+    date_updated = models.DateField(null=False, default=get_default_date_start)
+
 class BaseballGame(models.Model):
     id = models.IntegerField
     date_start = models.DateField(default= get_default_date_start(), db_comment="Date baseball game is slated to start, formatted as YYYY-mm-dd")

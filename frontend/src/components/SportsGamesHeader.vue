@@ -158,7 +158,7 @@ export default {
 <style scoped>
 .website-header{
   padding: 10px 40px;
-  background-color: #005A9C;
+  background-color: rgb(0, 128, 0);
   /* border-bottom: .3em solid #ca9420; */
   border-radius: 0 0 12px 12px;
 }
@@ -235,7 +235,7 @@ li a:before
   height: 100%;
   bottom: 0;
   left: 0;
-  background-color: lightblue;
+  background-color: rgba(0, 128, 0, 0.267);
   z-index: -1;
   transform: scale(0);
   transition: transform 0.5s ease-in-out

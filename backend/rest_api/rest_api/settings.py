@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = str(os.getenv('SECRET_KEY'))
+SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,10 +83,12 @@ WSGI_APPLICATION = 'rest_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dev',
-        'USER': 'mar',
-        'PASSWORD': 'martest'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': str(os.environ.get('RDS_DB_NAME')),
+        'USER': str(os.environ.get('RDS_USERNAME')),
+        'PASSWORD': str(os.environ.get('RDS_PASSWORD')),
+        'HOST': str(os.environ.get('RDS_HOSTNAME')),
+        'PORT': str(os.environ.get('RDS_PORT'))
     }
 }
 
@@ -131,3 +133,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# API KEYS
+
+RAPID_API_KEY = str(os.environ.get('X_RAPIDAPI_KEY'))

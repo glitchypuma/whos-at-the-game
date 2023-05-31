@@ -13,6 +13,10 @@ from .models import GamesMeta, BaseballGame, BasketballGame, FootballGame, Ameri
 import requests
 from datetime import datetime, timedelta
 from django.http import JsonResponse
+from django.conf import settings
+import pytz
+
+RAPIDAPI_KEY = settings.RAPID_API_KEY
 
 ''' BASEBALL (MLB) '''
 @csrf_exempt
@@ -23,16 +27,15 @@ def baseball_games_today(request):
     '''
     if(request.method == 'GET'):
         # does db have today's games?
-        processedToday = GamesMeta.objects.filter(date_updated = today.strftime('%Y-%m-%d')).first()
-        print(processedToday)
+        processedToday = GamesMeta.objects.filter(sport='baseball', date_updated = today.strftime('%Y-%m-%d')).first()
 
         if(check_exists(processedToday)): #if so, GET baseball games from db
             baseball_games = BaseballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(baseball_games.values()), safe=False)
         else: #if not, GET baseball games from API and save to db for future retrieval
-            # TODO: BETTER KEY MANAGEMENT
+            
             headers = {
-                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
+                'X-RapidAPI-Key': RAPIDAPI_KEY, 
                 'X-RapidAPI-Host': 'api-baseball.p.rapidapi.com'
                 }
             season = today.strftime('%Y')
@@ -69,7 +72,7 @@ def post_baseball_games(data):
     if(serializer.is_valid()):
         # if okay, save it on the database
         serializer.save()
-        update_date()
+        update_date('baseball')
         # provide a Json Response with the data that was saved
         return JsonResponse(serializer.data, safe=False, status=201)
         # provide a Json Response with the necessary error information
@@ -84,14 +87,14 @@ def basketball_games_today(request):
     Return list of all of today's basketball games
     '''
     if(request.method == 'GET'):
-        processedToday = GamesMeta.objects.filter(date_updated = today.strftime('%Y-%m-%d')).first()
+        processedToday = GamesMeta.objects.filter(sport= 'basketball', date_updated = today.strftime('%Y-%m-%d')).first()
 
         if(check_exists(processedToday)):
             basketball_games = BasketballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(basketball_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
+                'X-RapidAPI-Key': RAPIDAPI_KEY, 
                 'X-RapidAPI-Host': 'api-basketball.p.rapidapi.com'
             }
             season = (today - timedelta(days=365)).strftime('%Y') + "-" + today.strftime('%Y')
@@ -129,7 +132,7 @@ def post_basketball_games(data):
     if(serializer.is_valid()):
         # if okay, save it on the database
         serializer.save()
-        update_date()
+        update_date('basketball')
         # provide a Json Response with the data that was saved
         return JsonResponse(serializer.data, safe=False, status=201)
         # provide a Json Response with the necessary error information
@@ -143,14 +146,14 @@ def football_games_today(request):
     List all of today's football games using API-FOOTBALL
     '''
     if(request.method == 'GET'):
-        processedToday = GamesMeta.objects.filter(date_updated = today.strftime('%Y-%m-%d')).first()
+        processedToday = GamesMeta.objects.filter(sport= 'football', date_updated = today.strftime('%Y-%m-%d')).first()
 
         if(check_exists(processedToday)):
             football_games = FootballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(football_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
+                'X-RapidAPI-Key': RAPIDAPI_KEY, 
                 'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
             }
             season = today.strftime('%Y')
@@ -163,21 +166,23 @@ def football_games_today(request):
             response = requests.get('https://api-football-v1.p.rapidapi.com/v3/fixtures', headers=headers, params=params)
             football_games = response.json()
             return post_football_games(football_games)
+        
 def post_football_games(data):
+    tz = pytz.timezone('America/Los_Angeles')
     parameters = data['parameters']
     raw_games = data['response']
     mapped_football_games = [ ]
     for game in raw_games:
         mapped_football_games.append({
             'id': game['fixture']['id'],
-            'date_start': parameters['fixture']['date'],
-            'time_start': game['fixture']['timestamp'],
-            'season': parameters['fixture']['league']['season'],
-            'round': game['fixture']['league']['round'],
-            'home_team': game['fixture']['teams']['home']['name'],
-            'away_team': game['fixture']['teams']['away']['name'],
-            'country': game['fixture']['league']['country'],
-            'league': game['fixture']['league']['name'],
+            'date_start': parameters['date'],
+            'time_start': datetime.fromtimestamp(game['fixture']['timestamp'], tz=tz).strftime('%H:%M'),
+            'season': parameters['season'],
+            'round': game['league']['round'],
+            'home_team': game['teams']['home']['name'],
+            'away_team': game['teams']['away']['name'],
+            'country': game['league']['country'],
+            'league': game['league']['name'],
             'completed': True if game['fixture']['status']['short'] == 'FT' else False
         })
     serializer = FootballGameSerializer(data=mapped_football_games, many=True)
@@ -185,7 +190,7 @@ def post_football_games(data):
     if(serializer.is_valid()):
         # if okay, save it on the database
         serializer.save()
-        update_date()
+        update_date('football')
         # provide a Json Response with the data that was saved
         return JsonResponse(serializer.data, safe=False, status=201)
         # provide a Json Response with the necessary error information
@@ -202,14 +207,14 @@ def ame_football_games_today(request, league):
     Return list of all of today's basketball games
     '''
     if(request.method == 'GET'):
-        processedToday = GamesMeta.objects.filter(date_updated = today.strftime('%Y-%m-%d')).first()
+        processedToday = GamesMeta.objects.filter(sport= 'american_football', league= league, date_updated = today.strftime('%Y-%m-%d')).first()
 
         if(check_exists(processedToday)):
             american_football_games = AmericanFootballGame.objects.filter(date_start = today.strftime('%Y-%m-%d'))
             return JsonResponse(list(american_football_games.values()), safe=False)
         else:
             headers = {
-                'X-RapidAPI-Key': str(os.getenv('X-RapidAPI-Key')), 
+                'X-RapidAPI-Key': RAPIDAPI_KEY, 
                 'X-RapidAPI-Host': 'api-american-football.p.rapidapi.com'
             }
             match league:
@@ -228,8 +233,8 @@ def ame_football_games_today(request, league):
             }
             response = requests.get('https://api-american-football.p.rapidapi.com/games', headers=headers, params=params)
             american_football_games = response.json()
-            return post_american_football_games(american_football_games)
-def post_american_football_games(data):
+            return post_american_football_games(american_football_games, league)
+def post_american_football_games(data, league):
     parameters = data['parameters']
     raw_games = data['response']
     mapped_american_football_games = [ ]
@@ -249,7 +254,7 @@ def post_american_football_games(data):
     serializer = AmericanFootballGameSerializer(data=mapped_american_football_games, many=True)
     if(serializer.is_valid()):
         serializer.save()
-        update_date()
+        update_date('american_football', league)
         return JsonResponse(serializer.data, safe=False, status=201)
     return JsonResponse(serializer.errors, status=400)
         
@@ -262,11 +267,13 @@ def check_exists(data):
     else:
         return True
     
-def update_date():
-    date = {
+def update_date(sport, league=None):
+    update = {
+        'sport': sport,
+        'league': league,
         'date_updated': datetime.today().strftime('%Y-%m-%d')
     }
-    serializer = GamesMetaSerializer(data=date, many=False)
+    serializer = GamesMetaSerializer(data=update, many=False)
     if(serializer.is_valid()):
         serializer.save()
         return JsonResponse(serializer.data, safe=False, status=201)

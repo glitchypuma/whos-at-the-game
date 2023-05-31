@@ -4,7 +4,7 @@ from .models import GamesMeta, BaseballGame, BasketballGame, FootballGame, Ameri
 class GamesMetaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = GamesMeta
-        fields = ['date_updated']
+        fields = ['sport', 'league', 'date_updated']
 class BaseballGameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BaseballGame

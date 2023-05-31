@@ -83,10 +83,12 @@ WSGI_APPLICATION = 'rest_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dev',
-        'USER': 'mar',
-        'PASSWORD': 'martest'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': str(os.environ.get('RDS_DB_NAME')),
+        'USER': str(os.environ.get('RDS_USERNAME')),
+        'PASSWORD': str(os.environ.get('RDS_PASSWORD')),
+        'HOST': str(os.environ.get('RDS_HOSTNAME')),
+        'PORT': str(os.environ.get('RDS_PORT'))
     }
 }
 
@@ -134,4 +136,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # API KEYS
 
-RAPID_API_KEY = os.environ.get('X_RAPIDAPI_KEY')
+RAPID_API_KEY = str(os.environ.get('X_RAPIDAPI_KEY'))

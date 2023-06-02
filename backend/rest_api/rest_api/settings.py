@@ -29,7 +29,9 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['54.177.45.150', 'gameapi.buzz', 'localhost', 'localhost:8080']
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = True
+ALLOWED_HOSTS = ['54.177.45.150', 'gameapi.buzz', 'localhost', 'localhost:8080', '.whosatthegame.buzz', 'whosatthegame.buzz']
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOW_METHODS = [
 #     'GET'

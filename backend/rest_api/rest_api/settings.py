@@ -37,13 +37,11 @@ CORS_ALLOW_METHODS = [
     'GET'
 ]
 CORS_ALLOWED_ORIGINS = [
-    'https://www.whosatthegame.buzz',
-    'http://www.whosatthegame.buzz',
+    'www.whosatthegame.buzz',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://www.whosatthegame.buzz',
-    'http://www.whosatthegame.buzz',
+    'www.whosatthegame.buzz'
 ]
 
 # Application definition

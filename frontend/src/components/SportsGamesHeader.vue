@@ -182,10 +182,6 @@ export default {
   height: 400%;
 }
 
-/* button {
-  background-color: #005A9C;
-  color: #000000;
-} */
 h1 {
   margin: 0;
   text-align: left;
@@ -212,42 +208,20 @@ li {
   align-self: stretch;
   display: flex;
   align-items: center;
-  padding: .2rem;
-  border-radius: 5px;
-  /* border-style: dotted;
-  border-color: black; */
   background-color: #F2EFE9;
+  border-radius: .5rem;
 }
 li a {
-  padding: .2rem;
-  border-radius: 12px;
-  position: relative;
-  /* display: block; */
   color: black;
   text-decoration: none;
-  z-index: 0;
+  border-radius: .5rem;
+  border: 5px ridge transparent;
 }
-li a:before
-{
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  bottom: 0;
-  left: 0;
-  background-color: #337ca083;
-  z-index: -1;
-  transform: scale(0);
-  transition: transform 0.5s ease-in-out
+li a:hover,
+li a:focus {
+  padding: 3px;
+  border: 2px ridge #904E55;
 }
-li a:hover:before,
-li a:focus:before {
-  transform: scale(1);
-}
-/* a {
-  color: #000000;
-} */
-
 #header-toggle {
   background-color: #a5acaf9a;
   border-color: #A5ACAF;

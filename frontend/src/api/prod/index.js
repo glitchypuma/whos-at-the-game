@@ -1,6 +1,6 @@
 import axios from "axios";
 
- const root = 'https://gameapi.buzz/'
+ const root = 'https://www.gameapi.buzz/'
 
  export default {
     baseballPath: 'baseball_games_today/',

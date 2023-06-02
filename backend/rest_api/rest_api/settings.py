@@ -24,13 +24,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = str(os.getenv('SECRET_KEY'))
+SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = True
+ALLOWED_HOSTS = ['54.177.45.150', 'gameapi.buzz', 'localhost', 'localhost:8080', '.whosatthegame.buzz', 'whosatthegame.buzz']
 CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_METHODS = [
+#     'GET'
+# ]
+# CORS_ALLOWED_ORIGINS = [
+#     'https://www.whosatthegame.buzz',
+#     'http://www.whosatthegame.buzz',
+# ]
+
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://www.whosatthegame.buzz',
+#     'http://www.whosatthegame.buzz',
+# ]
 
 # Application definition
 
@@ -48,14 +62,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    # KEEP ORDER OF PREV MIDDLEWARES
 ]
 
 ROOT_URLCONF = 'rest_api.urls'
@@ -84,10 +99,12 @@ WSGI_APPLICATION = 'rest_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dev',
-        'USER': 'mar',
-        'PASSWORD': 'martest'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': str(os.environ.get('RDS_DB_NAME')),
+        'USER': str(os.environ.get('RDS_USERNAME')),
+        'PASSWORD': str(os.environ.get('RDS_PASSWORD')),
+        'HOST': str(os.environ.get('RDS_HOSTNAME')),
+        'PORT': str(os.environ.get('RDS_PORT'))
     }
 }
 
@@ -127,8 +144,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+                           
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# API KEYS
+
+RAPID_API_KEY = str(os.environ.get('X_RAPIDAPI_KEY'))

@@ -1,4 +1,7 @@
-# Stack
+# Who's at the Game?
+Website that uses Twitter API to make an educated guess about what celebrities are attending today's sports games
+
+## Stack
 Django version 4.2.1, Python version 3.10, Vue 5.0.8, PostgreSQL 15.2 (with [psycopg](https://www.psycopg.org/psycopg3/))
 
 ### Help?

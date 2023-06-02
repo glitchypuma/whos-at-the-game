@@ -1,6 +1,6 @@
 import axios from "axios";
 
- const root = 'http://localhost:8000/'
+ const root = 'http://gameapi.buzz/'
 
  export default {
     baseballPath: 'baseball_games_today/',
@@ -8,7 +8,6 @@ import axios from "axios";
     footballPath: 'football_games_today/',
     nflPath: 'ame_football_games_today/1/',
     ncaaPath: 'ame_football_games_today/2/',
-    scraperPath: 'baseball_games_today/', // TODO: add a case for this path
     get(path) {
         switch(path) {
             case 'baseball':

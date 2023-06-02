@@ -24,7 +24,7 @@ def scrape_twitter(away, home):
         #         tweet.likeCount, 
         #         tweet.retweetCount
         # ]
-        data = [tweet.rawContent]
+        data = tweet.rawContent
         tweets.append(data)
         if i > 1000:
             break
@@ -38,8 +38,8 @@ def scrape_twitter(away, home):
 
 
 if __name__ == '__main__':
-    tweets_str = scrape_twitter("dodgers", "braves")
-    file = open("tweets.txt", "w")
+    tweets_str = scrape_twitter("heat", "nuggets")
+    file = open("data/raw/tweets.txt", "w")
     file.write(tweets_str)
     file.close()
     # tweets_df['content'].to_string(file, index_names=False)

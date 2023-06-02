@@ -1,0 +1,16 @@
+SECRET_KEY=fux$!-5-&=15a!*9x9_mmgbm6gbj6vmwrzii-r5%wm3wds*jt1
+X_RAPIDAPI_KEY=e0a8f66d5dmsh53685da2f2425e3p138e6cjsnd3a33ec1fb3a
+
+# PROD
+DB_NAME=whos-at-the-game-db
+DB_HOST=whos-at-the-game-db.coqcntvhfhvl.us-west-1.rds.amazonaws.com
+DB_PORT=5432
+DB_USER=glitchyPuma
+DB_PASS=Reset2.Delirious.Expose
+
+# DEV
+# DB_NAME=dev
+# DB_HOST=localhost
+# DB_PORT=5432
+# DB_USER=mar
+# DB_PASS=martest

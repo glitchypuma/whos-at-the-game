@@ -31,6 +31,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['54.177.45.150', 'gameapi.buzz', 'localhost']
 CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_METHODS = [
+#     'GET'
+# ]
+# CORS_ALLOWED_ORIGINS = [
+#     'https://www.whosatthegame.buzz',
+#     'http://www.whosatthegame.buzz',
+# ]
+
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://www.whosatthegame.buzz',
+#     'http://www.whosatthegame.buzz',
+# ]
 
 # Application definition
 
@@ -47,14 +59,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    # KEEP ORDER OF PREV MIDDLEWARES
 ]
 
 ROOT_URLCONF = 'rest_api.urls'

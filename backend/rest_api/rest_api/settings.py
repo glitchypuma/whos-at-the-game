@@ -32,19 +32,19 @@ DEBUG = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
 ALLOWED_HOSTS = ['54.177.45.150', '.gameapi.buzz', 'localhost', 'localhost:8080', '.whosatthegame.buzz', 'whosatthegame.buzz']
-CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ALLOW_METHODS = [
-#     'GET'
-# ]
-# CORS_ALLOWED_ORIGINS = [
-#     'https://www.whosatthegame.buzz',
-#     'http://www.whosatthegame.buzz',
-# ]
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = [
+    'GET'
+]
+CORS_ALLOWED_ORIGINS = [
+    'https://www.whosatthegame.buzz',
+    'http://www.whosatthegame.buzz',
+]
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://www.whosatthegame.buzz',
-#     'http://www.whosatthegame.buzz',
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.whosatthegame.buzz',
+    'http://www.whosatthegame.buzz',
+]
 
 # Application definition
 

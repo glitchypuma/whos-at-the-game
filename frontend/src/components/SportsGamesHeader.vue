@@ -158,7 +158,7 @@ export default {
 <style scoped>
 .website-header{
   padding: 10px 40px;
-  background-color: rgb(0, 128, 0);
+  background-color: #6DA34D;
   /* border-bottom: .3em solid #ca9420; */
   border-radius: 0 0 12px 12px;
 }
@@ -191,12 +191,12 @@ h1 {
   text-align: left;
 }
 h2 {
-  color: white ;
+  color: #F2EFE9 ;
   margin: .1rem;
   text-align: left;
 }
 h3 {
-  color: white ;
+  color: #F2EFE9 ;
   position: relative;
 }
 ul {
@@ -216,7 +216,7 @@ li {
   border-radius: 5px;
   /* border-style: dotted;
   border-color: black; */
-  background-color: rgb(255, 255, 255);
+  background-color: #F2EFE9;
 }
 li a {
   padding: .2rem;
@@ -235,7 +235,7 @@ li a:before
   height: 100%;
   bottom: 0;
   left: 0;
-  background-color: rgba(0, 128, 0, 0.267);
+  background-color: #337ca083;
   z-index: -1;
   transform: scale(0);
   transition: transform 0.5s ease-in-out

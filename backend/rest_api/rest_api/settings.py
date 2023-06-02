@@ -30,17 +30,19 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 DEBUG = True
 
 ALLOWED_HOSTS = ['54.177.45.150', 'gameapi.buzz', 'localhost']
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOW_METHODS = [
-    'GET'
-]
-CORS_ALLOWED_ORIGINS = [
-    "https://www.whosatthegame.buzz",
-]
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_METHODS = [
+#     'GET'
+# ]
+# CORS_ALLOWED_ORIGINS = [
+#     'https://www.whosatthegame.buzz',
+#     'http://www.whosatthegame.buzz',
+# ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://www.whosatthegame.buzz",
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://www.whosatthegame.buzz',
+#     'http://www.whosatthegame.buzz',
+# ]
 
 # Application definition
 
@@ -57,9 +59,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

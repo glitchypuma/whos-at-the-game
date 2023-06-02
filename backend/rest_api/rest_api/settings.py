@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['54.177.45.150', 'gameapi.buzz', 'localhost']
+ALLOWED_HOSTS = ['54.177.45.150', 'gameapi.buzz', 'localhost', 'localhost:8080']
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOW_METHODS = [
 #     'GET'

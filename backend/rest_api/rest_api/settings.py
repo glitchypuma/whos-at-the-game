@@ -30,7 +30,17 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 DEBUG = True
 
 ALLOWED_HOSTS = ['54.177.45.150', 'gameapi.buzz', 'localhost']
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_METHODS = [
+    'GET'
+]
+CORS_ALLOWED_ORIGINS = [
+    "whosatthegame.buzz/",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "whosatthegame.buzz/",
+]
 
 # Application definition
 

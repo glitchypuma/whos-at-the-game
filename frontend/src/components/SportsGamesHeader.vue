@@ -4,7 +4,7 @@
     <h2 style="border-bottom: .1rem solid black;">Today's Games</h2>
     <div class="games">
       <div v-if="baseballGames.length">
-        <h3>⚾ Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">V</button></h3>
+        <h3>⚾ Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list');">V</button></h3>
       </div>
       <div v-if="basketballGames.length">
         <h3>🏀 Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">V</button></h3>
@@ -22,7 +22,7 @@
 
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
-        <a role="button" @mouseover="sendHoveredGameString(game)" v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)" v-on:click=" togglediv('baseball_list'); sendScraperParams(game);">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
@@ -30,7 +30,7 @@
 
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
-          <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+          <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="togglediv('basketball_list'); sendScraperParams(game);">
             {{ game.away_team }} @ {{ game.home_team }}
           </a>
         </li>
@@ -38,7 +38,7 @@
           
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
-        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="togglediv('nfl_football_list'); sendScraperParams(game);">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>  
       </li>
@@ -46,7 +46,7 @@
 
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
-        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="togglediv('ncaa_football_list'); sendScraperParams(game);">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
@@ -54,7 +54,7 @@
         
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
-        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="togglediv('football_list'); sendScraperParams(game);">
           {{ game.away_team }} vs {{ game.home_team }}
         </a>
       </li>
@@ -75,7 +75,8 @@ export default {
       basketballGames: [],
       NFLGames: [],
       NCAAGames: [],
-      footballGames: []
+      footballGames: [],
+      showGameList: false
     };
   },
 
@@ -122,12 +123,16 @@ export default {
     },
 
     sendScraperParams(selectedGame) {
+      this.toggleGameList()
       this.$emit("scraper-params", selectedGame)
     },
     sendHoveredGameString(game) {
       this.$emit("game-string", game.home_team + " game" )
     },
 
+    toggleGameList() {
+      this.showGameList = !this.showGameList
+    },
     togglediv: function (name) {
       var div = document.getElementsByClassName(name)[0]
 

@@ -4,7 +4,7 @@
     <h2 style="border-bottom: .1rem solid black;">Today's Games</h2>
     <div class="games">
       <div v-if="baseballGames.length">
-        <h3>⚾ Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list')">V</button></h3>
+        <h3>⚾ Baseball <button id="header-toggle" v-on:click="togglediv('baseball_list');">V</button></h3>
       </div>
       <div v-if="basketballGames.length">
         <h3>🏀 Basketball <button id="header-toggle" v-on:click="togglediv('basketball_list')">V</button></h3>
@@ -22,7 +22,7 @@
 
     <ul class="baseball_list">
       <li v-for="game in baseballGames" :key="game.id">
-        <a role="button" @mouseover="sendHoveredGameString(game)" v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)" v-on:click=" togglediv('baseball_list'); sendScraperParams(game);">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
@@ -30,7 +30,7 @@
 
     <ul class="basketball_list">
         <li v-for="game in basketballGames" :key="game.id">
-          <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+          <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="togglediv('basketball_list'); sendScraperParams(game);">
             {{ game.away_team }} @ {{ game.home_team }}
           </a>
         </li>
@@ -38,7 +38,7 @@
           
     <ul class="nfl_football_list">
       <li v-for="game in NFLGames" :key="game.id">
-        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="togglediv('nfl_football_list'); sendScraperParams(game);">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>  
       </li>
@@ -46,7 +46,7 @@
 
     <ul class="ncaa_football_list">
       <li v-for="game in NCAAGames" :key="game.id">
-        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="togglediv('ncaa_football_list'); sendScraperParams(game);">
           {{ game.away_team }} @ {{ game.home_team }}
         </a>
       </li>
@@ -54,7 +54,7 @@
         
     <ul class="football_list">
       <li v-for="game in footballGames" :key="game.id">
-        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="sendScraperParams(game)">
+        <a role="button" @mouseover="sendHoveredGameString(game)"  v-on:click="togglediv('football_list'); sendScraperParams(game);">
           {{ game.away_team }} vs {{ game.home_team }}
         </a>
       </li>
@@ -75,7 +75,8 @@ export default {
       basketballGames: [],
       NFLGames: [],
       NCAAGames: [],
-      footballGames: []
+      footballGames: [],
+      showGameList: false
     };
   },
 
@@ -122,12 +123,16 @@ export default {
     },
 
     sendScraperParams(selectedGame) {
+      this.toggleGameList()
       this.$emit("scraper-params", selectedGame)
     },
     sendHoveredGameString(game) {
       this.$emit("game-string", game.home_team + " game" )
     },
 
+    toggleGameList() {
+      this.showGameList = !this.showGameList
+    },
     togglediv: function (name) {
       var div = document.getElementsByClassName(name)[0]
 
@@ -158,7 +163,7 @@ export default {
 <style scoped>
 .website-header{
   padding: 10px 40px;
-  background-color: rgb(0, 128, 0);
+  background-color: #6DA34D;
   /* border-bottom: .3em solid #ca9420; */
   border-radius: 0 0 12px 12px;
 }
@@ -182,21 +187,17 @@ export default {
   height: 400%;
 }
 
-/* button {
-  background-color: #005A9C;
-  color: #000000;
-} */
 h1 {
   margin: 0;
   text-align: left;
 }
 h2 {
-  color: white ;
+  color: #F2EFE9 ;
   margin: .1rem;
   text-align: left;
 }
 h3 {
-  color: white ;
+  color: #F2EFE9 ;
   position: relative;
 }
 ul {
@@ -212,42 +213,20 @@ li {
   align-self: stretch;
   display: flex;
   align-items: center;
-  padding: .2rem;
-  border-radius: 5px;
-  /* border-style: dotted;
-  border-color: black; */
-  background-color: rgb(255, 255, 255);
+  background-color: #F2EFE9;
+  border-radius: .5rem;
 }
 li a {
-  padding: .2rem;
-  border-radius: 12px;
-  position: relative;
-  /* display: block; */
   color: black;
   text-decoration: none;
-  z-index: 0;
+  border-radius: .5rem;
+  border: 5px ridge transparent;
 }
-li a:before
-{
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 128, 0, 0.267);
-  z-index: -1;
-  transform: scale(0);
-  transition: transform 0.5s ease-in-out
+li a:hover,
+li a:focus {
+  padding: 3px;
+  border: 2px ridge #904E55;
 }
-li a:hover:before,
-li a:focus:before {
-  transform: scale(1);
-}
-/* a {
-  color: #000000;
-} */
-
 #header-toggle {
   background-color: #a5acaf9a;
   border-color: #A5ACAF;

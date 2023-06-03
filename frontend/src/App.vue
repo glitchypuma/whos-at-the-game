@@ -1,5 +1,4 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <SportsGamesHeader @game-string="setGameString" @scraper-params="getScraperParams"/>
   <WebsiteTitle :selectedGameString="gameString"/>
   <LandingPage v-if="!viewingGame" />

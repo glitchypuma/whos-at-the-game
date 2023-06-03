@@ -1,6 +1,6 @@
 <template>
     <body>
-        <h2>Looking at the conversation on Twitter, here's our best guess:</h2>
+        <h2>Judging by the conversation on Twitter, here's our best guess:</h2>
         <p>Game:<br>{{ selectedGame }}</p>
     </body>
 </template>

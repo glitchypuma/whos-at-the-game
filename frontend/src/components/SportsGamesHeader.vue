@@ -162,9 +162,8 @@ export default {
 
 <style scoped>
 .website-header{
-  padding: 10px 40px;
+  padding: .5rem 3rem;
   background-color: #6DA34D;
-  /* border-bottom: .3em solid #ca9420; */
   border-radius: 0 0 12px 12px;
 }
 .baseball_list,
@@ -184,7 +183,9 @@ export default {
   justify-content: flex-start;
   column-gap: 1rem;
   text-align: center;
-  height: 400%;
+  padding: 0;
+  margin: .2rem;
+  /* height: 400%; */
 }
 
 h1 {
@@ -220,12 +221,12 @@ li a {
   color: black;
   text-decoration: none;
   border-radius: .5rem;
-  border: 5px ridge transparent;
+  border: 5px inset transparent;
 }
 li a:hover,
 li a:focus {
-  padding: 3px;
-  border: 2px ridge #904E55;
+  padding: 2px;
+  border: 3px inset #904E55;
 }
 #header-toggle {
   background-color: #a5acaf9a;

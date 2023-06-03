@@ -18,7 +18,6 @@ export default {
 
 <style scoped>
 body {
-    /* color: #552583; */
     text-align: center;
 }
 

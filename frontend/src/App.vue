@@ -3,7 +3,7 @@
   <WebsiteTitle :selectedGameString="gameString"/>
   <LandingPage v-if="!viewingGame" />
   <GameAttendance v-if="viewingGame" :selectedGame="scraperParams"/>
-  <!-- FOOTER COMPONENT HERE -->
+  <WebsiteFooter />
 </template>
 
 <script>
@@ -11,6 +11,7 @@ import SportsGamesHeader from './components/SportsGamesHeader.vue'
 import WebsiteTitle from './components/WebsiteTitle.vue'
 import GameAttendance from './components/GameAttendance.vue'
 import LandingPage from './components/LandingPage.vue'
+import WebsiteFooter from './components/WebsiteFooter.vue'
 
 export default {
   name: 'App',
@@ -18,7 +19,8 @@ export default {
     SportsGamesHeader,
     WebsiteTitle,
     LandingPage,
-    GameAttendance
+    GameAttendance,
+    WebsiteFooter
   },
 
   data () {
@@ -59,6 +61,6 @@ export default {
 }
 
 ::selection {
-  background-color: rgba(0, 128, 0, 0.267);
+  background-color: #904e5579;
 }
 </style>

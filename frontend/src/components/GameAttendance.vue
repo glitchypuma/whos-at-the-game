@@ -49,23 +49,16 @@ p {
 ul {
   display: flex;
   flex-direction: column;
-  /* align-content: flex-start; */
   text-align: start;
   align-items: flex-start;
   align-self: center;
   gap: 1rem;
   list-style-type: none;
   padding: 0;
-  /* min-width: 20rem; */
 }
 li {
-    /* align-content: left; */
-    color: #337CA0;
+    color: var(--base);
     font-size: 20px;
-    /* text-align: left; */
-    /* background-color: #F2EFE9; */
-    /* padding: .5rem; */
-    /* border-radius: .5rem; */
-    border-bottom: 2px solid #337CA0;
+    border-bottom: 2px solid var(--base);
 }
 </style>

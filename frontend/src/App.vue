@@ -72,6 +72,8 @@ export default {
 </script>
 
 <style>
+@import './assets/base.css';
+
 #app {
   display: flex;
   flex-flow: column wrap;
@@ -80,12 +82,10 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #0B132B;
-  /* background-color: blanchedalmond; */
+  color: var(--oxford-blue);
 }
 
 ::selection {
-  /* color: #F2EFE9; */
-  background-color: #D8D4F2;
+  background-color: var(--light-accent);
 }
 </style>

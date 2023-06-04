@@ -161,9 +161,12 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+
 .website-header{
+  font-family: 'Raleway', sans-serif;
   padding: .5rem 3rem;
-  background-color: #6DA34D;
+  background-color: var(--base);
   border-radius: 0 0 12px 12px;
 }
 .baseball_list,
@@ -192,12 +195,12 @@ h1 {
   text-align: left;
 }
 h2 {
-  color: #0B132B ;
+  color: var(--dark-text);
   margin: .1rem;
   text-align: left;
 }
 h3 {
-  color: #0B132B ;
+  color: var(--dark-text);
   position: relative;
 }
 ul {
@@ -213,11 +216,11 @@ li {
   align-self: stretch;
   display: flex;
   align-items: center;
-  background-color: #F2EFE9;
+  background-color: var(--white-base);
   border-radius: .5rem;
 }
 li a {
-  color: #0B132B;
+  color: var(--dark-text);
   text-decoration: none;
   border-radius: .5rem;
   border: 5px inset transparent;
@@ -225,22 +228,12 @@ li a {
 li a:hover,
 li a:focus {
   padding: 2px;
-  border: 3px solid #D8D4F2;
+  border: 3px solid var(--light-accent);
 }
 #header-toggle {
-  background-color: #a5acaf9a;
-  border-color: #A5ACAF;
+  background-color: var(--white-base);
+  border-color: none;
   border-radius: 180px;
   vertical-align: center;
 }
 </style>
-<!-- 
-A27E8E mountbatten pink
-D8D4F2 lavender
-EE4266 red (crayola) -->
-
-<!-- mary hodge
-
-mario lopez
-
-spike lee -->

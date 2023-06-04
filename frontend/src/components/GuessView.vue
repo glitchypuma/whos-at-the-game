@@ -25,14 +25,11 @@ export default {
             try {
                 const typeContainer = await this.$refs.typewriter;
                 const type = this.guessTitle;
-                console.log("type: " + type);
-
                 var typewriter = new Typewriter(typeContainer, {
                     cursor: "",
                     autoStart: true,
                     loop: false
                 })
-
                 typewriter
                     .typeString(type)
                     .start()
@@ -49,7 +46,12 @@ export default {
 </script>
 
 <style scoped>
-#typewriter {
-    color: #337CA0;
+/* #typewriter {
+    
+} */
+.guessTitle {
+    font-family: 'Monomaniac One', sans-serif;
+    font-size: 2rem;
+    color: var(--dark-text);
 }
 </style>

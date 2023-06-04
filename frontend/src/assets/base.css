@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Monomaniac+One&family=Raleway:wght@500&display=swap');
+
+/* color palette  */
+:root {
+    --asparagus: #6DA34D;
+    --cerulean: #337CA0;
+    --oxford-blue: #0B132B;
+    --isabelline: #F2EFE9;
+    --lavender: #D8D4F2;
+    
+    --rose-quartz: #9D8CA1;
+    --orchid-pink: #D4AFB9;
+    --poppy: #DB2B39;
+    --tropical-indigo: #7D80DA;
+}
+
+/* semantic color variables for this project */
+:root {
+    --white-base: var(--isabelline);
+    --base: var(--asparagus);
+    --dark-accent: var(--poppy);
+    --light-accent: var(--tropical-indigo);
+
+    --dark-text: var(--oxford-blue);
+    --light-text: var(--isabelline);
+}

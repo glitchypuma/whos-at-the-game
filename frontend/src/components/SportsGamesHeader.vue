@@ -219,6 +219,7 @@ li {
   border-radius: .5rem;
 }
 li a {
+  opacity: 100%;
   color: var(--dark-text);
   text-decoration: none;
   border-radius: .5rem;

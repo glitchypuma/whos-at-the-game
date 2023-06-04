@@ -35,12 +35,12 @@
 :root {
     --white-base: var(--isabelline);
     --base: var(--cal-poly-green);
-    --dark-accent: var(--poppy);
+    --dark-accent: var(--eggplant);
     --light-accent: var(--cambridge-blue);
 
     --dark-text: var(--oxford-blue);
     --light-text: var(--isabelline);
-    --feature-text: var(--cerulean);
+    --feature-text: var(--oxford-blue);
 
     --base-font: var(--rubik);
     --feature-font: var(--bitter);

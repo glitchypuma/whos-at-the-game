@@ -17,8 +17,8 @@ export default {
 
 <style scoped>
 body {
+    color: gray;
     text-align: center;
-    opacity: 50%;
 }
 a {
     text-decoration: none;

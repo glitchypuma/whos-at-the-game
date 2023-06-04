@@ -84,6 +84,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: var(--oxford-blue);
 }
+a {
+  color: var(--dark-accent)
+}
+a:hover {
+  opacity: 75%;
+}
 
 ::selection {
   background-color: var(--light-accent);

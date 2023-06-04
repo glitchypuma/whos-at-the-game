@@ -161,10 +161,8 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
 
 .website-header{
-  font-family: 'Raleway', sans-serif;
   padding: .5rem 3rem;
   background-color: var(--base);
   border-radius: 0 0 12px 12px;
@@ -191,16 +189,17 @@ export default {
 }
 
 h1 {
+  color: var(--light-text);
   margin: 0;
   text-align: left;
 }
 h2 {
-  color: var(--dark-text);
+  color: var(--light-text);
   margin: .1rem;
   text-align: left;
 }
 h3 {
-  color: var(--dark-text);
+  color: var(--light-text);
   position: relative;
 }
 ul {

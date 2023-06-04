@@ -1,11 +1,11 @@
 <template>
     <body>
         <h2>Judging by the conversation on Twitter, here's our best guess:</h2>
-        <ul>
-            <template v-for="person in personGuesses" :key="person.id">
+        <div class="guesses">
+            <div class="guess" v-for="person in personGuesses" :key="person.id">
                 <GuessView :guessName="person.name" />
-            </template>
-        </ul>
+            </div>
+        </div>
         <p>Game:<br>{{ game }}</p>
     </body>
 </template>
@@ -46,19 +46,14 @@ p {
     margin: 2rem 3rem;
     text-align: start;
 }
-ul {
+
+.guesses {
   display: flex;
   flex-direction: column;
-  text-align: start;
-  align-items: flex-start;
+  align-items: baseline;
   align-self: center;
-  gap: 1rem;
-  list-style-type: none;
+  gap: 2rem;
   padding: 0;
-}
-li {
-    color: var(--base);
-    font-size: 20px;
-    border-bottom: 2px solid var(--base);
+  margin: 0;
 }
 </style>

@@ -50,8 +50,8 @@ export default {
     
 } */
 .guessTitle {
-    font-family: 'Monomaniac One', sans-serif;
+    font-family: var(--feature-font);
     font-size: 2rem;
-    color: var(--dark-text);
+    color: var(--feature-text);
 }
 </style>

@@ -79,7 +79,7 @@ export default {
   flex-flow: column wrap;
   justify-content: flex-start;
   align-content: stretch;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--base-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--oxford-blue);
@@ -87,5 +87,6 @@ export default {
 
 ::selection {
   background-color: var(--light-accent);
+  /* color: var(--light-text); */
 }
 </style>

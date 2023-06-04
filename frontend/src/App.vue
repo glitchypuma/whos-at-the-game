@@ -35,11 +35,11 @@ export default {
 
   methods: {
     getGame(game) {
+      this.getBestGuess()
       this.selectedGame = game
       this.gameString = game.home_team + " game" 
       this.viewingGame = true
       //this.getBestGuess(this.selectedGame);
-      this.getBestGuess()
     },
     setGameString(gameString) {
       if(!this.viewingGame){

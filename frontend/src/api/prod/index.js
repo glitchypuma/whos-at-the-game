@@ -8,6 +8,7 @@ import axios from "axios";
     footballPath: 'football_games_today/',
     nflPath: 'ame_football_games_today/1/',
     ncaaPath: 'ame_football_games_today/2/',
+    scraperPath: '', // TODO
     get(path) {
         switch(path) {
             case 'baseball':
@@ -20,6 +21,8 @@ import axios from "axios";
                 return axios.get(root + this.ncaaPath)
             case 'football':
                 return axios.get(root + this.footballPath)
+            case 'scraper': //TODO
+                return axios.get(root + this.scraperPath)
         }
         return Error(path + " was not recognized as a path!")
     }

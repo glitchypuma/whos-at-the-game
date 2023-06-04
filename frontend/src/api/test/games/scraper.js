@@ -1,6 +1,6 @@
 export const names = [
     {
-        name: "",
+        name: "Dua Lipa",
         rank: null
     },
     {

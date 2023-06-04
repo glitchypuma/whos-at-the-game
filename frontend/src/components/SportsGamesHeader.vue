@@ -185,7 +185,6 @@ export default {
   text-align: center;
   padding: 0;
   margin: .2rem;
-  /* height: 400%; */
 }
 
 h1 {
@@ -193,12 +192,12 @@ h1 {
   text-align: left;
 }
 h2 {
-  color: #F2EFE9 ;
+  color: #0B132B ;
   margin: .1rem;
   text-align: left;
 }
 h3 {
-  color: #F2EFE9 ;
+  color: #0B132B ;
   position: relative;
 }
 ul {
@@ -218,7 +217,7 @@ li {
   border-radius: .5rem;
 }
 li a {
-  color: black;
+  color: #0B132B;
   text-decoration: none;
   border-radius: .5rem;
   border: 5px inset transparent;
@@ -226,7 +225,7 @@ li a {
 li a:hover,
 li a:focus {
   padding: 2px;
-  border: 3px inset #904E55;
+  border: 3px solid #D8D4F2;
 }
 #header-toggle {
   background-color: #a5acaf9a;
@@ -235,3 +234,13 @@ li a:focus {
   vertical-align: center;
 }
 </style>
+<!-- 
+A27E8E mountbatten pink
+D8D4F2 lavender
+EE4266 red (crayola) -->
+
+<!-- mary hodge
+
+mario lopez
+
+spike lee -->

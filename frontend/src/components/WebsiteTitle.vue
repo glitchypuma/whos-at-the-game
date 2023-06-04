@@ -9,9 +9,8 @@
 export default {
     name: 'WebsiteTitle',
     props: {
-        /** Pass anything needed to scrape twitter */
         selectedGameString: String
-    }
+    },
 }
 
 </script>

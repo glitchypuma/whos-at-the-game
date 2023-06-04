@@ -1,12 +1,13 @@
 <template>
-  <SportsGamesHeader @game-string="setGameString" @scraper-params="getScraperParams"/>
+  <SportsGamesHeader @game-string="setGameString" @scraper-params="getGame"/>
   <WebsiteTitle :selectedGameString="gameString"/>
   <LandingPage v-if="!viewingGame" />
-  <GameAttendance v-if="viewingGame" :selectedGame="scraperParams"/>
+  <GameAttendance v-if="viewingGame" :bestGuess="bestGuess" :selectedGame="selectedGame"/>
   <WebsiteFooter />
 </template>
 
 <script>
+import api from './api/api.js'
 import SportsGamesHeader from './components/SportsGamesHeader.vue'
 import WebsiteTitle from './components/WebsiteTitle.vue'
 import GameAttendance from './components/GameAttendance.vue'
@@ -25,23 +26,46 @@ export default {
 
   data () {
     return {
-      scraperParams: {},
+      selectedGame: {},
       viewingGame: false,
-      gameString: ''
+      gameString: '',
+      bestGuess: []
     }
   },
 
   methods: {
-    getScraperParams(game) {
-      this.scraperParams = game;
-      this.gameString = game.home_team + " game" ;
-      this.viewingGame = true;
+    getGame(game) {
+      this.selectedGame = game
+      this.gameString = game.home_team + " game" 
+      this.viewingGame = true
+      //this.getBestGuess(this.selectedGame);
+      this.getBestGuess()
     },
     setGameString(gameString) {
       if(!this.viewingGame){
-        this.gameString = gameString;
+        this.gameString = gameString
+      }
+    },
+    async getBestGuess() {
+      try {
+          const response = await api.get('scraper')
+          console.log(response)
+          this.bestGuess = response.data
+      } catch (error) {
+          console.log(error)
       }
     }
+    // async getBestGuess(selectedGame) {
+    //   var query = selectedGame.home_team
+    //   // TODO: use selectedGame to construct query 
+    //   try {
+    //       const response = await api.get('scraper', query);
+    //       console.log(response)
+    //       this.bestGuess = response.data;
+    //   } catch (error) {
+    //       console.log(error);
+    //   }
+    // }
   }
 };
 
@@ -56,11 +80,12 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: black;
+  color: #0B132B;
   /* background-color: blanchedalmond; */
 }
 
 ::selection {
-  background-color: #904e5579;
+  /* color: #F2EFE9; */
+  background-color: #D8D4F2;
 }
 </style>

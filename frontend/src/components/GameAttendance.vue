@@ -2,6 +2,8 @@
     <body>
         <h2>Judging by the conversation on Twitter, here's our best guess:</h2>
         <p>Game:<br>{{ selectedGame }}</p>
+
+        {{ bestGuess }}
     </body>
 </template>
 
@@ -12,19 +14,28 @@ export default {
     name: 'GameAttendance',
 
     props: {
-        selectedGame: { }
+        selectedGame: { },
+        bestGuess: [ ]
     },
 
+    // data() {
+    //     return {
+    //         bestGuess: [],
+    //     };
+    // },
+
     methods: {
-        // TODO: implement output of scraper results
-        // async getScraperResults() {
+        // request an endpoint that returns desc ordered list of potential celebrities at the game
+        // async getBestGuess() {
+        //     // use selectedGame to construct query 
         //     try {
-        //         const response = await api.get('baseball');
-        //         this.baseballGames = response.data;
+        //         const response = await api.get('scraper');
+        //         console.log(response)
+        //         this.bestGuess = response.data;
         //     } catch (error) {
         //         console.log(error);
         //     }
-        // },
+        // }
     }
 }
 
@@ -33,5 +44,9 @@ export default {
 <style scoped>
 body {
     text-align: center;
+}
+p{
+    margin: 2rem 3rem;
+    text-align: start;
 }
 </style>

@@ -1,13 +1,12 @@
 <template>
     <body>
         <h2>Judging by the conversation on Twitter, here's our best guess:</h2>
-        <p>Game:<br>{{ selectedGame }}</p>
         <ul>
-            <li v-for="person in bestGuess" :key="person.id">
-                <GuessView :guess="person" />
-                <!-- <p class="typewriter">{{ person.name }}</p> -->
-            </li>
+            <template v-for="person in personGuesses" :key="person.id">
+                <GuessView :guessName="person.name" />
+            </template>
         </ul>
+        <p>Game:<br>{{ game }}</p>
     </body>
 </template>
 
@@ -26,31 +25,12 @@ export default {
         bestGuess: [ ]
     },
 
-    // data() {
-    //     return {
-    //         bestGuess: [],
-    //     };
-    // },
-
-    methods: {
-        // request an endpoint that returns desc ordered list of potential celebrities at the game
-        // async getBestGuess() {
-        //     // use selectedGame to construct query 
-        //     try {
-        //         const response = await api.get('scraper');
-        //         console.log(response)
-        //         this.bestGuess = response.data;
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
-        // sendGuess() {
-        //     this.$emit("guess", guess.name)
-        // }
+    data() {
+        return {
+            game: this.selectedGame,
+            personGuesses: this.bestGuess
+        }
     },
-    // created() {
-    //     this.sendGuess();
-    // }
 }
 
 </script>

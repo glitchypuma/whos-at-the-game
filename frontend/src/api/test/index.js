@@ -4,7 +4,8 @@ import * as footballGames from './games/football.js'
 import * as scraperResults from './games/scraper.js'
 
 export default {
-   get(path) {
+   // eslint-disable-next-line
+   get(path, query = null) {
        switch(path) {
            case 'baseball':
                return { data:  baseballGames.mlb }

@@ -8,8 +8,9 @@ import axios from "axios";
     footballPath: 'football_games_today/',
     nflPath: 'ame_football_games_today/1/',
     ncaaPath: 'ame_football_games_today/2/',
-    scraperPath: '', // TODO
-    get(path) {
+    scraperPath: 'twitter_scraper/', // TODO
+    // eslint-disable-next-line
+    get(path, query = null) {
         switch(path) {
             case 'baseball':
                 return axios.get(root + this.baseballPath)
@@ -21,8 +22,8 @@ import axios from "axios";
                 return axios.get(root + this.ncaaPath)
             case 'football':
                 return axios.get(root + this.footballPath)
-            case 'scraper': //TODO
-                return axios.get(root + this.scraperPath)
+            case 'scraper':
+                return axios.get(root + this.scraperPath + this.query)
         }
         return Error(path + " was not recognized as a path!")
     }

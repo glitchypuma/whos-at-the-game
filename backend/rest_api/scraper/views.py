@@ -5,15 +5,18 @@ import snscrape.modules.twitter as sntwitter
 import pandas as pd
 from django.http import HttpResponse, JsonResponse
 import requests
+from . import nlp
 
 def get_guess(request, away, home):
     if(request.method == 'GET'):
         tweets_str = scrape_twitter(away, home)
+        # people_str = nlp.get_names(tweets_str)
+        people_list = nlp.get_names(tweets_str)
 
         mapped_guesses = [ ]
-        for tweet in tweets_str[0:100].split(" "):
+        for person in people_list:
             mapped_guesses.append({
-                'name': tweet,
+                'name': person,
                 'rank': None
             })
         return JsonResponse(data=mapped_guesses, safe=False, status=201)
@@ -40,7 +43,7 @@ def scrape_twitter(away, home):
         # ]
         data = tweet.rawContent
         tweets.append(data)
-        if i > 25:
+        if i > 1000:
             break
 
     # tweets_df = pd.DataFrame(tweets, columns=['date', 'id', 'content', 'username', 

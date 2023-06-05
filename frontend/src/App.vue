@@ -40,8 +40,7 @@ export default {
       this.selectedGame = game
       this.getBestGuess()
       this.viewingGame = true
-      this.gameString = game.home_team + " game" 
-      //this.getBestGuess(this.selectedGame);
+      this.gameString = game.home_team + " game"
     },
     setGameString(gameString) {
       if(!this.viewingGame){

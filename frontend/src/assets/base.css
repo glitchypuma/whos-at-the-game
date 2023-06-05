@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@600&family=Poppins:wght@300&family=Rubik&family=Titillium+Web&display=swap');
+
+:root {
+    /* color palette  */
+    --cal-poly-green: #2E5339;
+    --dark-purple: #27233A;
+    --eggplant: #553A41;
+    --cambridge-blue: #9DC5BB;
+    --cerulean: #337CA0; 
+
+
+    --dodger-blue: #2191FB;
+    --apricot: #FFD5C2;
+
+    --asparagus: #6DA34D;
+      
+    --tropical-indigo: #7D80DA;    
+    --oxford-blue: #0B132B;
+    --isabelline: #F2EFE9;
+
+    --poppy: #DB2B39;
+    --lavender: #D8D4F2;
+ 
+    --rose-quartz: #9D8CA1;
+    --orchid-pink: #D4AFB9;
+
+    /* fonts */
+    --rubik: 'Rubik', sans-serif;
+    --poppins: 'Poppins', sans-serif;
+    --titillium-web: 'Titillium Web', sans-serif;
+    --bitter: 'Bitter', serif;
+}
+ 
+/* semantic color variables for this project */
+:root {
+    --white-base: var(--isabelline);
+    --base: var(--cal-poly-green);
+    --dark-accent: var(--eggplant);
+    --light-accent: var(--cambridge-blue);
+
+    --dark-text: var(--oxford-blue);
+    --light-text: var(--isabelline);
+    --feature-text: var(--oxford-blue);
+
+    --base-font: var(--rubik);
+    --feature-font: var(--bitter);
+}

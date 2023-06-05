@@ -10,7 +10,7 @@ import requests
 
 # Create your views here.
 #def scrape_twitter(request, away, home):
-def scrape_twitter(away, home):
+def scrape_twitter(request, away, home):
 
     scraper = sntwitter.TwitterSearchScraper(home + " " + away)
 

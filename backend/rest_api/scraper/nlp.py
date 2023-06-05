@@ -2,8 +2,9 @@ import spacy
 
 def get_names(string):
 
-    nlp = spacy.load("en_core_web_lg")
 
+    nlp = spacy.load("en_core_web_md")
+    
     # Created by processing a string of text with the nlp object, replace Hello Wordl! with tweets string
     doc = nlp(string)
 

@@ -25,7 +25,7 @@ urlpatterns = [
     path('football_games_today/', views.football_games_today, name='football_today'),
     path('ame_football_games_today/<int:league>/', views.ame_football_games_today, name='ame_football_today'),
     
-    path('twitter_scraper/<str:away>/<str:home>/', scraper_views.scrape_twitter),
+    path('twitter_scraper/<str:away>/<str:home>/', scraper_views.get_guess),
 
     path('admin/', admin.site.urls),
 ]

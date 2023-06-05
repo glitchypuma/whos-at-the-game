@@ -2,7 +2,7 @@
   <SportsGamesHeader @game-string="setGameString" @scraper-params="getGame"/>
   <WebsiteTitle :selectedGameString="gameString"/>
   <LandingPage v-if="!viewingGame" />
-  <GameAttendance v-if="viewingGame" :bestGuess="bestGuess" :selectedGame="selectedGame"/>
+  <GameAttendance v-if="renderGuess" :bestGuess="bestGuess" :selectedGame="selectedGame"/>
   <WebsiteFooter />
 </template>
 
@@ -29,16 +29,18 @@ export default {
       selectedGame: {},
       viewingGame: false,
       gameString: '',
-      bestGuess: []
+      bestGuess: [],
+      renderGuess: false
     }
   },
 
   methods: {
     getGame(game) {
+      this.renderGuess = false
       this.getBestGuess()
       this.selectedGame = game
-      this.gameString = game.home_team + " game" 
       this.viewingGame = true
+      this.gameString = game.home_team + " game" 
       //this.getBestGuess(this.selectedGame);
     },
     setGameString(gameString) {
@@ -49,8 +51,8 @@ export default {
     async getBestGuess() {
       try {
           const response = await api.get('scraper')
-          console.log(response)
           this.bestGuess = response.data
+          this.renderGuess = true
       } catch (error) {
           console.log(error)
       }

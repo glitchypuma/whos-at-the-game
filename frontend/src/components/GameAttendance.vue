@@ -31,6 +31,9 @@ export default {
             personGuesses: this.bestGuess
         }
     },
+    created() {
+        
+    }
 }
 
 </script>

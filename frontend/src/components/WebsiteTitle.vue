@@ -9,17 +9,14 @@
 export default {
     name: 'WebsiteTitle',
     props: {
-        /** Pass anything needed to scrape twitter */
         selectedGameString: String
-    }
+    },
 }
 
 </script>
 
 <style scoped>
 body {
-    /* color: #552583; */
     text-align: center;
 }
-
 </style>

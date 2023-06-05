@@ -39,11 +39,13 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOWED_ORIGINS = [
     'https://www.whosatthegame.buzz',
     'http://www.whosatthegame.buzz',
+    "https://develop.d303cstxig0c3e.amplifyapp.com"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://www.whosatthegame.buzz',
     'http://www.whosatthegame.buzz',
+    "https://develop.d303cstxig0c3e.amplifyapp.com/"
 ]
 
 # Application definition
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'games',
+    'scraper',
     'rest_framework',
     'corsheaders'
 ]
@@ -132,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 

@@ -161,10 +161,10 @@ export default {
 </script>
 
 <style scoped>
+
 .website-header{
-  padding: 10px 40px;
-  background-color: #6DA34D;
-  /* border-bottom: .3em solid #ca9420; */
+  padding: .5rem 3rem;
+  background-color: var(--base);
   border-radius: 0 0 12px 12px;
 }
 .baseball_list,
@@ -184,20 +184,22 @@ export default {
   justify-content: flex-start;
   column-gap: 1rem;
   text-align: center;
-  height: 400%;
+  padding: 0;
+  margin: .2rem;
 }
 
 h1 {
+  color: var(--light-text);
   margin: 0;
   text-align: left;
 }
 h2 {
-  color: #F2EFE9 ;
+  color: var(--light-text);
   margin: .1rem;
   text-align: left;
 }
 h3 {
-  color: #F2EFE9 ;
+  color: var(--light-text);
   position: relative;
 }
 ul {
@@ -213,23 +215,24 @@ li {
   align-self: stretch;
   display: flex;
   align-items: center;
-  background-color: #F2EFE9;
+  background-color: var(--white-base);
   border-radius: .5rem;
 }
 li a {
-  color: black;
+  opacity: 100%;
+  color: var(--dark-text);
   text-decoration: none;
   border-radius: .5rem;
-  border: 5px ridge transparent;
+  border: 5px inset transparent;
 }
 li a:hover,
 li a:focus {
-  padding: 3px;
-  border: 2px ridge #904E55;
+  padding: 2px;
+  border: 3px solid var(--light-accent);
 }
 #header-toggle {
-  background-color: #a5acaf9a;
-  border-color: #A5ACAF;
+  background-color: var(--white-base);
+  border-color: none;
   border-radius: 180px;
   vertical-align: center;
 }

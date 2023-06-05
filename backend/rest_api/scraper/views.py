@@ -11,7 +11,7 @@ def get_guess(request, away, home):
         tweets_str = scrape_twitter(away, home)
 
         mapped_guesses = [ ]
-        for tweet in tweets_str:
+        for tweet in tweets_str.split(" "):
             mapped_guesses.append({
                 'name': tweet,
                 'rank': None

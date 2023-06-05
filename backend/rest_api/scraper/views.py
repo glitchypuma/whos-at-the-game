@@ -11,7 +11,7 @@ def get_guess(request, away, home):
         tweets_str = scrape_twitter(away, home)
 
         mapped_guesses = [ ]
-        for tweet in tweets_str in range(0,100):
+        for tweet in tweets_str:
             mapped_guesses.append({
                 'name': tweet,
                 'rank': None
@@ -40,7 +40,7 @@ def scrape_twitter(away, home):
         # ]
         data = tweet.rawContent
         tweets.append(data)
-        if i > 1000:
+        if i > 100:
             break
 
     # tweets_df = pd.DataFrame(tweets, columns=['date', 'id', 'content', 'username', 

@@ -6,11 +6,25 @@ import pandas as pd
 from django.http import HttpResponse, JsonResponse
 import requests
 
+def get_guess(request, away, home):
+    if(request.method == 'GET'):
+        tweets_str = scrape_twitter(away, home)
+
+        mapped_guesses = [ ]
+        for tweet in tweets_str in range(0,100):
+            mapped_guesses.append({
+                'name': tweet,
+                'rank': None
+            })
+        return JsonResponse(data=mapped_guesses, safe=False, status=201)
+    else:
+        return JsonResponse(status=400)
+
 #snscraper dev version: 0.6.2.20230321.dev12+gea49c19
 
 # Create your views here.
 #def scrape_twitter(request, away, home):
-def scrape_twitter(request, away, home):
+def scrape_twitter(away, home):
 
     scraper = sntwitter.TwitterSearchScraper(home + " " + away)
 
@@ -33,7 +47,6 @@ def scrape_twitter(request, away, home):
     #                                             'like_count', 'retweet_count'])
     tweets_str = ' '.join(str(x) for x in tweets)
     return tweets_str
-    
     
 
 

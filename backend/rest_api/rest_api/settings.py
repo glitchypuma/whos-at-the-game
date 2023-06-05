@@ -39,11 +39,13 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOWED_ORIGINS = [
     'https://www.whosatthegame.buzz',
     'http://www.whosatthegame.buzz',
+    "https://develop.d303cstxig0c3e.amplifyapp.com"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://www.whosatthegame.buzz',
     'http://www.whosatthegame.buzz',
+    "https://develop.d303cstxig0c3e.amplifyapp.com/"
 ]
 
 # Application definition

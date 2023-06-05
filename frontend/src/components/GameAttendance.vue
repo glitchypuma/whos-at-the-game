@@ -42,7 +42,7 @@ export default {
 body {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     text-align: center;
 }
 p {
@@ -52,11 +52,14 @@ p {
 
 .guesses {
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   align-items: baseline;
-  align-self: center;
-  gap: 2rem;
+  gap: 1rem;
   padding: 0;
-  margin: 0;
+  margin: .5em;
 }
+/* .guess {
+    display: flex;
+    flex-direction: row;
+} */
 </style>

@@ -38,7 +38,7 @@ export default {
     getGame(game) {
       this.renderGuess = false
       this.selectedGame = game
-      this.getBestGuess(this.selectedGame)
+      this.getBestGuess()
       this.viewingGame = true
       this.gameString = game.home_team + " game" 
       //this.getBestGuess(this.selectedGame);
@@ -48,18 +48,9 @@ export default {
         this.gameString = gameString
       }
     },
-    // async getBestGuess() {
-    //   try {
-    //       const response = await api.get('scraper')
-    //       this.bestGuess = response.data
-    //       this.renderGuess = true
-    //   } catch (error) {
-    //       console.log(error)
-    //   }
-    // }
-    async getBestGuess(selectedGame) {
-      
-      var query = '<str:' + selectedGame.away_team + '>/<str:' + selectedGame.home_team + '>/'
+    async getBestGuess() {
+      const query = this.getScraperQuery(this.selectedGame);
+      console.log(query)
       try {
           const response = await api.get('scraper', query);
           this.bestGuess = response.data;
@@ -67,6 +58,10 @@ export default {
       } catch (error) {
           console.log(error);
       }
+    },
+      getScraperQuery(selectedGame) {
+      var query = selectedGame.away_team + "/" + selectedGame.home_team + "/";
+      return query;
     }
   }
 };

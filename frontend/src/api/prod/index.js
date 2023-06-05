@@ -23,7 +23,7 @@ import axios from "axios";
             case 'football':
                 return axios.get(root + this.footballPath)
             case 'scraper':
-                return axios.get(root + this.scraperPath + this.query)
+                return axios.get(root + this.scraperPath + query)
         }
         return Error(path + " was not recognized as a path!")
     }

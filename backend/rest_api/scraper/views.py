@@ -40,7 +40,7 @@ def scrape_twitter(away, home):
         # ]
         data = tweet.rawContent
         tweets.append(data)
-        if i > 100:
+        if i > 25:
             break
 
     # tweets_df = pd.DataFrame(tweets, columns=['date', 'id', 'content', 'username', 
